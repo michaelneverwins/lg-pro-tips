@@ -16,7 +16,7 @@ Once Steam is installed, downloading and playing games is done the same way as o
      * This will additionally allow installation all other Windows games, including the vast majority which haven't been manually verified for Proton compatibility by Valve.
      * The Proton version selected here will be used for all games by default, except for whitelisted games which will use Valve's selected Proton version by default.
 
-  ![](proton-settings.png)
+  ![](images/steam-global-compatibility-settings.png)
 
 ### Huh? What's Proton?
 It's a compatibility layer for Windows games on Linux, based on Wine.
@@ -31,22 +31,22 @@ It's a compatibility layer for Windows software on Linux.
 * Enable the "Force the use of a specific Steam Play compatibility tool" option.
 * Select a specific Proton version from the drop-down menu which appears.
 
-  ![](force-specific-proton.png)
+  ![](images/steam-game-compatibility-options.png)
 
 ### How do I tell which version of Proton a game is using?
 * Select a game in your library and click the "Show more details" button on the right-hand side of the window.
 
-  ![(It's the button with the "i" in a circle.)](details.png)
+  ![(It's the button with the "i" in a circle.)](images/steam-game-show-more-details.png)
   
 * The bottom of the expanded area should indicate which Proton version, if any, is being used.
 
-  ![](details-proton-version.png)
+  ![](images/steam-game-expanded-details.png)
 
 ## Why isn't this Windows game working?
 If you're having trouble running a Windows game with Proton, try looking it up on ProtonDB ([`https://www.protondb.com/`](https://www.protondb.com/)). This should give you an idea of whether the game is known to have issues, or whether it's just you. If there's a known fix for the game, it will usually be mentioned in one of the reports. Despite the questionable rating system, ProtonDB is a good resource. In some cases, you might also want to take a look at PC Gaming Wiki ([`https://www.pcgamingwiki.com/`](https://www.pcgamingwiki.com/)). If an older game requires patching to be suitable for modern Windows then it might require the same patching on Linux.
 
 ### Why isn't this Windows game's patch or mod working?
-Some patches may require additional launch options. For example, ThirteenAG's widescreen fix for *Max Payne* works by adding a DLL file, `d3d8.dll`, and you'll need to add `WINEDLLOVERRIDES="d3d8=n,b" %command%` to the game's launch options in order to make that DLL file work. With any luck, a game's ProtonDB reports will mention any non-obvious steps for applying popular patches to Windows games on Linux.
+Some patches may require additional launch options. For example, ThirteenAG's widescreen fix for *Max Payne* ([`https://thirteenag.github.io/wfp#mp1`](https://thirteenag.github.io/wfp#mp1)) works by adding a DLL file, `d3d8.dll`, and you'll need to add `WINEDLLOVERRIDES="d3d8=n,b" %command%` to the game's launch options in order to make that DLL file work when running the game with Proton. With any luck, a game's ProtonDB reports will mention any non-obvious steps for applying popular patches to Windows games on Linux.
 
 ### How do I add the launch options recommended by this ProtonDB report?
 * Right-click the game in your library.
@@ -54,7 +54,7 @@ Some patches may require additional launch options. For example, ThirteenAG's wi
 * Go to the "General" tab.
 * Type or paste the launch option(s) into the text field.
 
-  ![](launch-options.png)
+  ![](images/steam-game-launch-options.png)
 
   * The launch options field is often used to set environment variables, e.g. `PROTON_USE_WINED3D=1`; these need to be followed by `%command%`.
   * Command-line arguments to the game itself, e.g. `-window` to enable windowed mode, may then follow `%command%`.
@@ -86,7 +86,7 @@ Here are a few:
 
 * Proton-GE ([`https://github.com/GloriousEggroll/proton-ge-custom`](https://github.com/GloriousEggroll/proton-ge-custom)), a custom build of Proton which fixes issues in some games.
 * Steam Tinker Launch ([`https://github.com/frostworx/steamtinkerlaunch`](https://github.com/frostworx/steamtinkerlaunch)), a tool for automatically applying fixes to games.
-  * This can also be used via the launch options using `stl %command%`.
+  * This can be used either as a Steam Play compatibility tool or as a launch option (`stl %command%`).
 * Boxtron ([`https://github.com/dreamer/boxtron`](https://github.com/dreamer/boxtron)), for running DOSBox-powered games with the native Linux version of DOSBox if Steam provides only a Windows version.
 * Roberta ([`https://github.com/dreamer/roberta`](https://github.com/dreamer/roberta)), for running ScummVM-powered games with the native Linux version of ScummVM if Steam provides only a Windows version.
   * This can also be used for some games which are ScummVM-compatible but come packaged with DOSBox by default, namely the *Phantasmagoria* series.
@@ -96,4 +96,4 @@ Here are a few:
 ## Other miscellaneous notes:
 * Lutris ([`https://lutris.net/`](https://lutris.net/)) can import your games from Steam and other stores, and might help you run them more easily.
 * GameHub ([`https://github.com/tkashkin/GameHub/`](https://github.com/tkashkin/GameHub/)) also integrates with Steam and other stores.
-* GameDataPackager ([`https://wiki.debian.org/Games/GameDataPackager`](https://wiki.debian.org/Games/GameDataPackager)), a tool which packages non-free game data for use with free Linux-native engines, is able to locate installed Steam games automatically. So if you want to play your Steam copy of *The Ultimate DOOM* using the Chocolate Doom source port, for example, you can just install *The Ultimate DOOM* via Steam and run `game-data-packager -i doom`, after which the Steam copy can be uninstalled.
+* GameDataPackager ([`https://wiki.debian.org/Games/GameDataPackager`](https://wiki.debian.org/Games/GameDataPackager)), a tool which packages non-free game data for use with free Linux-native engines, is able to locate installed Steam games automatically. So if you want to play your Steam copy of *The Ultimate DOOM* using the Chocolate Doom source port, for example, you can just download the game via Steam and run `game-data-packager -i doom` to create and install the `doom-wad` package for use with Chocolate Doom (or the source port of your choice), after which the Steam copy can be uninstalled.
