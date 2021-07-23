@@ -40,8 +40,8 @@ do
 		echo -e "\e[31mNo app manifest for app ID:\e[39m ${number}"
 		continue
 	fi
-        # Get the game title from the app manifest.
-	title=$(grep -oP '"name"\s+"\K.+(?=")' ${manifest})
+        # Get the game title from the app manifest; remove any slashes.
+	title=$(sed "s/\//-/g" <<< $(grep -oP '"name"\s+"\K.+(?=")' ${manifest}))
 	# Use the game title as the name of a symbolic link.
 	link="${COMPATDATA}/${title}"
 	# Create the link to the app ID folder if it doesn't already exist.
