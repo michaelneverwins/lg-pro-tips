@@ -4,6 +4,8 @@ It should be easy. If you're using a distro like Ubuntu or Mint, you can just se
 ```
 sudo apt install steam
 ```
+
+## How do I play Steam games on Linux?
 Once Steam is installed, downloading and playing games (nominally) works the same way as on Windows:
 * Select a game in your library.
 * Click the blue "download" button.
