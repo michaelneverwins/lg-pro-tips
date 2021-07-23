@@ -1,22 +1,29 @@
 # Linux Gaming on Steam
 ## How do I install Steam on Linux?
-It should be easy. If you're using a distro like Ubuntu or Mint, you can just search for it in your software manager and click "Install". If you want to use the terminal, just do this (or your package manager's equivalent "install the thing" command):
+It should be easy. If you're using a distro like Ubuntu or Mint, you can just search for it in your software manager and click "Install". If you want to use the terminal, just do this (or your package manager's equivalent "install a program" command):
 ```
 sudo apt install steam
 ```
-Once Steam is installed, downloading and playing games is done the same way as on Windows.
+Once Steam is installed, downloading and playing games (nominally) works the same way as on Windows:
+* Select a game in your library.
+* Click the blue "download" button.
+* Click the green "play" button.
+
+If the "download" button is gray and cannot be clicked, and is accompanied by a note that the game is available on Windows, then you need to update your Steam Play settings; see below.
 
 ## How do I install Windows games?
 * Open the Settings window.
 * Go to the "Steam Play" tab.
 * Make sure **both** of the following options are enabled:
   * "Enable Steam Play for supported titles"
-     * This will allow installation of whitelisted Windows games.
+     * This will allow installation of Windows games officially supported by Steam Play.
   * "Enable Steam Play for all other titles"
      * This will additionally allow installation all other Windows games, including the vast majority which haven't been manually verified for Proton compatibility by Valve.
-     * The Proton version selected here will be used for all games by default, except for whitelisted games which will use Valve's selected Proton version by default.
+     * The Proton version selected here will be used for all games by default, except for officially supported games which will use Valve's selected Proton version by default.
 
   ![](images/steam-global-compatibility-settings.png)
+
+* Once your settings are saved, you'll need to restart Steam for these changes to take effect, after which you should be able to install any Windows game.
 
 ### Huh? What's Proton?
 It's a compatibility layer for Windows games on Linux, based on Wine.
@@ -24,7 +31,7 @@ It's a compatibility layer for Windows games on Linux, based on Wine.
 #### Huh? What's Wine?
 It's a compatibility layer for Windows software on Linux.
 
-### How do I override the Proton version for a particular game?
+### How do I override the Proton version for a specific game?
 * Right-click the game in your library.
 * Select "Properties...".
 * Go to the "Compatibility" tab.
@@ -33,7 +40,7 @@ It's a compatibility layer for Windows software on Linux.
 
   ![](images/steam-game-compatibility-options.png)
 
-### How do I tell which version of Proton a game is using?
+### How do I know which version of Proton a specific game is using?
 * Select a game in your library and click the "Show more details" button on the right-hand side of the window.
 
   ![(It's the button with the "i" in a circle.)](images/steam-game-show-more-details.png)
@@ -41,6 +48,13 @@ It's a compatibility layer for Windows software on Linux.
 * The bottom of the expanded area should indicate which Proton version, if any, is being used.
 
   ![](images/steam-game-expanded-details.png)
+
+## How do I use Proton to play a Windows game?
+For Windows games in your Steam library, Steam runs Proton for you. Once you have Steam Play set up and the game is installed, just click "play". When launching a Windows game with Steam Play for the first time, you'll see a message like this one pop up:
+
+![](images/steam-game-first-steam-play-launch.png)
+
+Click "continue" and Steam will attempt to run the game. It's not guaranteed to work, but it often does.
 
 ## Why isn't this Windows game working?
 If you're having trouble running a Windows game with Proton, try looking it up on ProtonDB ([`https://www.protondb.com/`](https://www.protondb.com/)). This should give you an idea of whether the game is known to have issues, or whether it's just you. If there's a known fix for the game, it will usually be mentioned in one of the reports. Despite the questionable rating system, ProtonDB is a good resource. In some cases, you might also want to take a look at PC Gaming Wiki ([`https://www.pcgamingwiki.com/`](https://www.pcgamingwiki.com/)). If an older game requires patching to be suitable for modern Windows then it might require the same patching on Linux.
