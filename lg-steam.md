@@ -4,6 +4,7 @@ It should be easy. If you're using a distro like Ubuntu or Mint, you can just se
 ```
 sudo apt install steam
 ```
+You can also download a `.deb` file from [`https://store.steampowered.com/about/`](https://store.steampowered.com/about/) and install it that way, if it's not in your distro's package repository.
 
 ## How do I play Steam games on Linux?
 Once Steam is installed, downloading and playing games (nominally) works the same way as on Windows:
@@ -101,7 +102,7 @@ You'll have to follow the README for the compatibility tool you're trying to ins
 Here are a few:
 
 * Proton-GE ([`https://github.com/GloriousEggroll/proton-ge-custom`](https://github.com/GloriousEggroll/proton-ge-custom)), a custom build of Proton which fixes issues in some games.
-* Steam Tinker Launch ([`https://github.com/frostworx/steamtinkerlaunch`](https://github.com/frostworx/steamtinkerlaunch)), a tool for automatically applying fixes to games.
+* Steam Tinker Launch ([`https://github.com/frostworx/steamtinkerlaunch`](https://github.com/frostworx/steamtinkerlaunch)), a tool for automatically applying tweaks to games and customizing how they run.
   * This can be used either as a Steam Play compatibility tool or as a launch option (`stl %command%`).
 * Boxtron ([`https://github.com/dreamer/boxtron`](https://github.com/dreamer/boxtron)), for running DOSBox-powered games with the native Linux version of DOSBox if Steam provides only a Windows version.
 * Roberta ([`https://github.com/dreamer/roberta`](https://github.com/dreamer/roberta)), for running ScummVM-powered games with the native Linux version of ScummVM if Steam provides only a Windows version.
@@ -112,4 +113,4 @@ Here are a few:
 ## Other miscellaneous notes:
 * Lutris ([`https://lutris.net/`](https://lutris.net/)) can import your games from Steam and other stores, and might help you run them more easily.
 * GameHub ([`https://github.com/tkashkin/GameHub/`](https://github.com/tkashkin/GameHub/)) also integrates with Steam and other stores.
-* GameDataPackager ([`https://wiki.debian.org/Games/GameDataPackager`](https://wiki.debian.org/Games/GameDataPackager)), a tool which packages non-free game data for use with free Linux-native engines, is able to locate installed Steam games automatically. So if you want to play your Steam copy of *The Ultimate DOOM* using the Chocolate Doom source port, for example, you can just download the game via Steam and run `game-data-packager -i doom` to create and install the `doom-wad` package for use with Chocolate Doom (or the source port of your choice), after which the Steam copy can be uninstalled.
+* GameDataPackager ([`https://wiki.debian.org/Games/GameDataPackager`](https://wiki.debian.org/Games/GameDataPackager)), a tool which packages non-free game data for use with free Linux-native engines, is able to locate installed Steam games automatically.
