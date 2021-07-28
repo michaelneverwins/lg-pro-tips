@@ -1,4 +1,5 @@
 # Linux Gaming on Steam
+
 ## How do I install Steam on Linux?
 It should be easy. If you're using a distro like Ubuntu or Mint, you can just search for it in your software manager and click "Install". If you want to use the terminal, just do this (or your package manager's equivalent "install a program" command):
 ```
@@ -91,6 +92,13 @@ You can try forcing Steam to run the Windows version of the game with Proton.
 * Enable the "Force the use of a specific Steam Play compatibility tool" option.
 * Select a specific Proton version from the drop-down menu which appears.
 * If you already had the Linux version of the game installed, Steam will now replace it with the Windows version.
+
+## How do I view only my Linux games?
+Interestingly, the Steam client for Linux does not seem to provide an easy way to see, at a glance, which of the games in one's library are natively Linux-compatible. The option technically does exist, but does not work as you might expect. You may have noticed this "games that run on Linux" filter represented by a little penguin button:
+
+![](images/steam-library-linux-filter.png)
+
+However, this is not a filter for Linux-native games. If you've enabled Steam Play for all games, then Steam thus considers all Windows games to be runnable on Linux; in this case, the filter really has no effect. You can disable Steam Play for all games in order to make this filter show only the games in your library which run natively on Linux, but changing that option requires a restart of the Steam client.
 
 ## Where are my games installed?
 By default, your games will be installed somewhere under your home directory, typically under `~/.steam/root/steamapps/common`. This includes both Linux games and Windows games. Meanwhile, each Windows game's Wine prefix will be under `~/.steam/root/steamapps/compatdata`.
