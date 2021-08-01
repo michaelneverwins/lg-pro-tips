@@ -114,7 +114,6 @@ Here are a few:
   * This can be used either as a Steam Play compatibility tool or as a launch option (`stl %command%`).
 * Boxtron ([`https://github.com/dreamer/boxtron`](https://github.com/dreamer/boxtron)), for running DOSBox-powered games with the native Linux version of DOSBox if Steam provides only a Windows version.
 * Roberta ([`https://github.com/dreamer/roberta`](https://github.com/dreamer/roberta)), for running ScummVM-powered games with the native Linux version of ScummVM if Steam provides only a Windows version.
-  * This can also be used for some games which are ScummVM-compatible but come packaged with DOSBox by default, namely the *Phantasmagoria* series.
 * Luxtorpeda ([`https://github.com/luxtorpeda-dev/luxtorpeda`](https://github.com/luxtorpeda-dev/luxtorpeda)), for running various games with their respective Linux-native source ports or engine re-implementations.
   * Supported games: [`https://luxtorpeda-dev.github.io/packages.html`](https://luxtorpeda-dev.github.io/packages.html)
 
