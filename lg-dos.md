@@ -11,7 +11,7 @@ sudo apt install dosbox
 Explaining how to *run* DOSBox, on any operating system, is a bit outside the scope of this guide. It generally works on Linux in the same way as on Windows. If you're playing a game that was packaged with DOSBox by a PC game retailer, then all of the necessary configuration has probably been done for you. However, if you want a tutorial or a manual, you can find both on the DOSBox official site: [`https://www.dosbox.com/`](https://www.dosbox.com/)
 
 ### DOSBox Staging
-DOSBox Staging [`https://github.com/dosbox-staging/dosbox-staging`](https://github.com/dosbox-staging/dosbox-staging) is fork of DOSBox that fixes some issues present in regular DOSBox and adds some features. It's also required — or, at least, strongly recommended — for Boxtron (see below).
+DOSBox Staging ([`https://github.com/dosbox-staging/dosbox-staging`](https://github.com/dosbox-staging/dosbox-staging)) is fork of DOSBox that fixes some issues present in regular DOSBox and adds some features. It's also required — or, at least, strongly recommended — for Boxtron (see below).
 
 There's a PPA for Ubuntu and Mint users (see [`https://dosbox-staging.github.io/downloads/linux/`](https://dosbox-staging.github.io/downloads/linux/)), so you can install DOSBox Staging like this:
 ```bash
