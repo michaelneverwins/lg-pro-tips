@@ -5,3 +5,4 @@ I started writing some things, and I figured, "hey, why not version-control this
 * [Where to Buy Games for Linux](lg-buy.md)
 * [Linux Gaming on Steam](lg-steam.md)
 * [DOS Gaming on Linux](lg-dos.md)
+* [Desktop Entries](lg-shortcuts.md)
