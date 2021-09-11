@@ -1,15 +1,18 @@
 # Desktop Entries
-Desktop shortcuts and menu shortcuts in Linux are defined by simple text files called desktop entries.
+Desktop shortcuts and menu shortcuts in Linux are defined by files called desktop entries. These are simple text files with the extension `.desktop`.
 
 ## Locations
 
 ### Desktop shortcuts
-Desktop shortcuts are typically defined by desktop entry files located in your `~/Desktop` directory.
+Desktop shortcuts are typically defined by desktop entry files located in your `~/Desktop` directory. For these to work, you may need to make them executable (although this step will probably be done already for any desktop shortcuts not created manually by you):
+```bash
+chmod u+x ~/Desktop/*.desktop
+```
 
 ### Menu shortcuts
 
 #### System applications
-System-wide menu shortcuts, usually created automatically for system-wide applications installed by your package manager, are defined by desktop entries typically located in `/usr/share/applications` and/or `/usr/local/share/applications`. These directories are owned by `root`, but you can modify the associated desktop entries without special permissions by overriding the system-wide desktop entries with user-specific desktop entries (see below).
+System-wide menu shortcuts, usually created automatically for system-wide applications installed by your package manager, are defined by desktop entries typically located in `/usr/share/applications` and/or `/usr/local/share/applications`. These directories are owned by `root`, but you can modify the associated menu shortcuts without special permissions by overriding the system-wide desktop entries with user-specific desktop entries (see below).
 
 #### User applications
 User-specific menu shortcuts are defined by desktop entries typically located in `~/.local/share/applications`. This directory is owned by you, so you can modify the files therein as you like. If a desktop entry in this user directory has the same file name as a desktop entry in the `root`-owned system directory, the one in the user directory takes precedence. Therefore, if you want to change the icon image or other details of a menu shortcut defined in `/usr/share/applications`, you can make a copy of it in `~/.local/share/applications` and modify the copy.
@@ -37,7 +40,7 @@ Categories=Game;
 * The `Path` value is the working directory from which the program is to be executed.
   * In this case, it's the directory into which I extracted `Darkula.exe` from `Darkula.zip`:
     ```bash
-    wget https://locomalito.com/juegos/Darkula.zip -P ~/Downloads/
+    wget https://locomalito.com/juegos/Darkula.zip -P ~/Downloads
     mkdir -p ~/.local/share/games/Darkula
     unzip ~/Downloads/Darkula.zip -d ~/.local/share/games/Darkula
     ```
