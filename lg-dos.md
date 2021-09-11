@@ -28,7 +28,7 @@ If you want to use Linux DOSBox to play a Steam game that came with Windows DOSB
 
 See the GitHub page ([`https://github.com/dreamer/boxtron`](https://github.com/dreamer/boxtron)) for instructions on installing Boxtron and its dependencies. Once it's installed and Steam is restarted, you can open up any DOSBox-powered Steam game's properties window and select Boxtron.
 
-If want Boxtron to use some DOSBox executable which is not identified by running `which dosbox`, this will require editing the `cmd = ...` line in the `[dosbox]` section of `~/.config/boxtron.conf`. For more on configuration of Boxtron, see the wiki ([`https://github.com/dreamer/boxtron/wiki/Configuration`](https://github.com/dreamer/boxtron/wiki/Configuration)).
+If you want Boxtron to use some DOSBox executable which is not identified by running `which dosbox`, this will require editing the `cmd = ...` line in the `[dosbox]` section of `~/.config/boxtron.conf`. For more on configuration of Boxtron, see the wiki ([`https://github.com/dreamer/boxtron/wiki/Configuration`](https://github.com/dreamer/boxtron/wiki/Configuration)).
 
 ### with Non-Steam Games
 Boxtron can also be used with non-Steam games if you add them to your local Steam library using Steam's "Add a Non-Steam Game" feature. This is especially easy for GOG games, because Boxtron comes with an `install-gog-game` script (see [`https://github.com/dreamer/boxtron#gog-games`](https://github.com/dreamer/boxtron#gog-games)). Given a GOG game installer, this script will unpack the game and create a `.desktop` file which can be easily added to Steam. The script requires `python3` and `wine`.
