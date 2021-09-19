@@ -118,6 +118,7 @@ Here are a few:
   * Supported games: [`https://luxtorpeda-dev.github.io/packages.html`](https://luxtorpeda-dev.github.io/packages.html)
 
 ## Other miscellaneous notes:
+* Protontricks ([`https://github.com/Matoking/protontricks`](https://github.com/Matoking/protontricks)) is a Winetricks wrapper for use with Steam Play and Proton. Winetricks ([`https://github.com/Winetricks/winetricks`](https://github.com/Winetricks/winetricks) helps to automate various tweaks such as changing Wine's configuration and installing missing dependencies.
 * Lutris ([`https://lutris.net/`](https://lutris.net/)) can import your games from Steam and other stores, and might help you run them more easily.
 * GameHub ([`https://github.com/tkashkin/GameHub/`](https://github.com/tkashkin/GameHub/)) also integrates with Steam and other stores.
 * GameDataPackager ([`https://wiki.debian.org/Games/GameDataPackager`](https://wiki.debian.org/Games/GameDataPackager)), a tool which packages non-free game data for use with free Linux-native engines, is able to locate installed Steam games automatically.
