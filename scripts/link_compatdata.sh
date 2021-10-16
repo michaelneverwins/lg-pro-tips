@@ -37,6 +37,11 @@ do
 	manifest=${STEAMAPPS}/appmanifest_${number}.acf
 	if [ ! -f "${manifest}" ]
 	then
+		# App ID "0" seems to have some special use; it's not a game.
+		if [ ${number} -eq "0" ]
+		then
+			continue
+		fi
 		echo -e "\e[31mNo app manifest for app ID:\e[39m ${number}"
 		continue
 	fi
