@@ -52,7 +52,14 @@ do
 	# Create the link to the app ID folder if it doesn't already exist.
 	if [ -L "${link}" ]
 	then
-		echo -e "\e[33mExisting link:\e[39m '${link}' -> '${number}'"
+		target=$(readlink "${link}")
+		if [ "${target}" == "${number}" ]
+		then
+			echo -en "\e[33m"
+		else
+			echo -en "\e[31m"
+		fi
+		echo -e "Existing link:\e[39m '${link}' -> '${target}'"
 	else
 		echo -en "\e[32mCreating link:\e[39m "
 		ln -sv ${number} "${link}"
