@@ -6,3 +6,7 @@ I started writing some things, and I figured, "hey, why not version-control this
 * [Linux Gaming on Steam](lg-steam.md)
 * [DOS Gaming on Linux](lg-dos.md)
 * [Desktop Entries](lg-shortcuts.md)
+
+## Scripts
+* [create links identifying Steam-managed Wine prefixes by game titles](scripts/link_compatdata.sh)
+* [replace "Play this game on Steam" with game descriptions in Steam-managed shortcuts](scripts/update_steam_shortcuts.sh)
