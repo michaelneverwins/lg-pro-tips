@@ -20,8 +20,8 @@ The Linux version of the Itch.io desktop app is also capable of installing Windo
 ## GOG
 GOG, with its famously DRM-free catalog, naturally has some games for your free operating system.
 
-* Linux games: [`https://www.gog.com/games?system=lin_ubuntu,lin_mint,lin_ubuntu_18&hide=dlc`](https://www.gog.com/games?system=lin_ubuntu,lin_mint,lin_ubuntu_18&hide=dlc)
-* Linux games on sale: [`https://www.gog.com/games?system=lin_ubuntu,lin_mint,lin_ubuntu_18&price=discounted&hide=dlc`](https://www.gog.com/games?system=lin_ubuntu,lin_mint,lin_ubuntu_18&price=discounted&hide=dlc)
+* Linux games: [`https://www.gog.com/games?systems=linux`](https://www.gog.com/games?systems=linux)
+* Linux games on sale: [`https://www.gog.com/games?systems=linux&discounted=true`](https://www.gog.com/games?systems=linux&discounted=true)
 
 The optional Galaxy launcher is still Windows-only, but it's GOG so you can download your games directly from the website. There are also a couple of unofficial GOG clients for Linux:
 
