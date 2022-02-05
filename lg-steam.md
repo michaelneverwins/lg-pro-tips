@@ -81,9 +81,7 @@ Some patches may require additional launch options. For example, ThirteenAG's wi
 Some launch options are documented in the Proton README on GitHub ([`https://github.com/ValveSoftware/Proton/`](https://github.com/ValveSoftware/Proton/)).
 
 ## Why isn't this Linux game working?
-Sometimes developers don't do a good job of making Linux builds for their games. In particular, games developed with GameMaker Studio are often known to have broken Linux ports.
-
-You can try forcing Steam to run the Windows version of the game with Proton.
+Sometimes developers don't do a good job of making Linux builds of their games. In such cases, you can try forcing Steam to run the Windows version of the game with Proton.
 
 ### How do I run the Windows version of a supposedly Linux-compatible game whose Linux build is not working?
 * Right-click the game in your library.
