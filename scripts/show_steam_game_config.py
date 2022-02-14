@@ -56,36 +56,6 @@ def vdf_to_json(text: str) -> str:
     return text.join("{}")
 
 
-def get_title(app_id: str) -> str:
-    """Given an app ID, get the game's title from the app manifest."""
-    try:
-        with open(
-            os.path.join(ROOT, "steamapps", f"appmanifest_{app_id}.acf"), "rt"
-        ) as f:
-            return json.loads(vdf_to_json(f.read()))["AppState"]["name"]
-    except FileNotFoundError:
-        print(f"Failed to get title for app ID {app_id}")
-
-
-def format_name(name: str) -> str:
-    """Get a more human-readable name for the given compatibility tool.
-
-    For input starting with ``proton_``, this function assumes that the
-    first character following the underscore is the major version number
-    and that any subsequent characters comprise the minor version number.
-    This particular implementation will presumably stop working when Proton
-    10 is released.
-
-    For all other input, this function simply returns the given string with
-    title-like capitalization.
-    """
-    if name.startswith("proton_"):
-        version = name.split("_", 1)[1]
-        return f"Proton {version[0]}.{version[1:] or '0'}"
-    else:
-        return name.title()
-
-
 def get_compatibility_tool_mapping() -> dict:
     """Get the mapping of app IDs to compatibility tools.
 
@@ -149,6 +119,36 @@ def get_installed_apps() -> list:
         except TypeError:
             pass
     return installed_app_ids
+
+
+def get_title(app_id: str) -> str:
+    """Given an app ID, get the game's title from the app manifest."""
+    try:
+        with open(
+            os.path.join(ROOT, "steamapps", f"appmanifest_{app_id}.acf"), "rt"
+        ) as f:
+            return json.loads(vdf_to_json(f.read()))["AppState"]["name"]
+    except FileNotFoundError:
+        print(f"Failed to get title for app ID {app_id}")
+
+
+def format_name(name: str) -> str:
+    """Get a more human-readable name for the given compatibility tool.
+
+    For input starting with ``proton_``, this function assumes that the
+    first character following the underscore is the major version number
+    and that any subsequent characters comprise the minor version number.
+    This particular implementation will presumably stop working when Proton
+    10 is released.
+
+    For all other input, this function simply returns the given string with
+    title-like capitalization.
+    """
+    if name.startswith("proton_"):
+        version = name.split("_", 1)[1]
+        return f"Proton {version[0]}.{version[1:] or '0'}"
+    else:
+        return name.title()
 
 
 def _main():
