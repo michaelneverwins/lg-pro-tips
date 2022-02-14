@@ -82,7 +82,6 @@ def format_name(name: str) -> str:
     """
     if name.startswith("proton_"):
         version = name.split("_", 1)[1]
-        # This will presumably stop working when Proton 10 is released.
         return f"Proton {version[0]}.{version[1:] or '0'}"
     else:
         return name.title()
@@ -103,6 +102,7 @@ def get_compatibility_tool_mapping() -> dict:
         os.path.join(HOME, ".steam", "root", "config", "config.vdf"), "rt"
     ) as f:
         config = json.loads(vdf_to_json(f.read()))
+
     mapping = config["InstallConfigStore"]["Software"]["Valve"]["Steam"][
         "CompatToolMapping"
     ]
@@ -123,10 +123,12 @@ def get_launch_option_mapping() -> dict:
             os.path.join(user_data, basename)
         ),
     )[-1]
+
     with open(
         os.path.join(user_data, user_id, "config", "localconfig.vdf"), "rt"
     ) as f:
         config = json.loads(vdf_to_json(f.read()))
+
     apps = config["UserLocalConfigStore"]["Software"]["Valve"]["Steam"]["Apps"]
     launch_option_mapping = {}
     for app_id, app_info in apps.items():
