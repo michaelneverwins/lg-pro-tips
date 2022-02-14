@@ -123,13 +123,10 @@ def get_installed_apps() -> list:
 
 def get_title(app_id: str) -> str:
     """Given an app ID, get the game's title from the app manifest."""
-    try:
-        with open(
-            os.path.join(ROOT, "steamapps", f"appmanifest_{app_id}.acf"), "rt"
-        ) as f:
-            return json.loads(vdf_to_json(f.read()))["AppState"]["name"]
-    except FileNotFoundError:
-        print(f"Failed to get title for app ID {app_id}")
+    with open(
+        os.path.join(ROOT, "steamapps", f"appmanifest_{app_id}.acf"), "rt"
+    ) as f:
+        return json.loads(vdf_to_json(f.read()))["AppState"]["name"]
 
 
 def format_name(name: str) -> str:
