@@ -22,7 +22,6 @@ This script operates on a few assumptions:
 This script comes with no warranty of any kind. Use it at your own risk.
 """
 
-import glob
 import json
 import os
 import pathlib
