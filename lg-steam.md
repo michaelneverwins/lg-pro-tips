@@ -125,7 +125,9 @@ Here are a few:
 * Steam Tinker Launch ([`https://github.com/frostworx/steamtinkerlaunch`](https://github.com/frostworx/steamtinkerlaunch)), a tool for automatically applying tweaks to games and customizing how they run.
   * This can be used either as a Steam Play compatibility tool or as a launch option (`steamtinkerlaunch %command%`).
 * Boxtron ([`https://github.com/dreamer/boxtron`](https://github.com/dreamer/boxtron)), for running DOSBox-powered games with the native Linux version of DOSBox if Steam provides only a Windows version.
+  * DOSBox-powered Steam games: [`https://steamdb.info/instantsearch/?refinementList[technologies][0]=Emulator.DOSBOX`](https://steamdb.info/instantsearch/?refinementList%5Btechnologies%5D%5B0%5D=Emulator.DOSBOX)
 * Roberta ([`https://github.com/dreamer/roberta`](https://github.com/dreamer/roberta)), for running ScummVM-powered games with the native Linux version of ScummVM if Steam provides only a Windows version.
+  * ScummVM-powered Steam games: [`https://steamdb.info/instantsearch/?refinementList[technologies][0]=Emulator.SCUMMVM`](https://steamdb.info/instantsearch/?refinementList%5Btechnologies%5D%5B0%5D=Emulator.SCUMMVM)
 * Luxtorpeda ([`https://github.com/luxtorpeda-dev/luxtorpeda`](https://github.com/luxtorpeda-dev/luxtorpeda)), for running various games with their respective Linux-native source ports or engine re-implementations.
   * Supported games: [`https://luxtorpeda-dev.github.io/packages.html`](https://luxtorpeda-dev.github.io/packages.html)
 
