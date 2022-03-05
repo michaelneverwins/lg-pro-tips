@@ -1,5 +1,5 @@
 # Desktop Entries
-Desktop shortcuts and menu shortcuts in Linux are defined by files called desktop entries. These are simple text files with the extension `.desktop`.
+Desktop shortcuts and menu shortcuts in Linux are defined by files called desktop entries. These are simple text files with the extension `.desktop`, and this is a brief guide to how they work. You don't necessarily need to create or edit these files by hand, the exact instructions for dealing with shortcuts using GUIs will vary between desktop environments, whereas the file format itself and other details below are standard.
 
 ## Locations
 
@@ -16,8 +16,6 @@ System-wide menu shortcuts, usually created automatically for system-wide applic
 
 #### User applications
 User-specific menu shortcuts are defined by desktop entries typically located in `~/.local/share/applications`. This directory is owned by you, so you can modify the files therein as you like. If a desktop entry in this user directory has the same file name as a desktop entry in the `root`-owned system directory, the one in the user directory takes precedence. Therefore, if you want to change the icon image or other details of a menu shortcut defined in `/usr/share/applications`, you can make a copy of it in `~/.local/share/applications` and modify the copy.
-
-Of course, you don't necessarily need to copy, edit, or create these files by hand. However, the instructions for creating and modifying menu and desktop shortcuts with graphical user interfaces will vary between desktop environments, whereas the file format itself is standard.
 
 #### Other
 Desktop entries may also be found in other locations, such as `/var/lib/flatpak/exports/share/applications` for Flatpak programs and `/var/lib/snapd/desktop/applications` for applications installed via Snap.
