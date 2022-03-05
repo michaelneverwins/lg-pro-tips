@@ -142,10 +142,13 @@ def format_name(name: str) -> str:
     title-like capitalization.
     """
     if name.startswith("proton_"):
+        # Assume "proton_XYZ" means "Proton X.YZ".
         version = name.split("_", 1)[1]
         return f"Proton {version[0]}.{version[1:] or '0'}"
     else:
-        return name.title()
+        # Apply title capitalization to all other names, but preserve existing
+        # upper-case characters. Note that "A" < "a", etc., hence the `min`.
+        return "".join(min(pair) for pair in zip(name.title(), name))
 
 
 def _main():
