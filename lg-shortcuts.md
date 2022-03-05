@@ -1,5 +1,5 @@
 # Desktop Entries
-Desktop shortcuts and menu shortcuts in Linux are defined by files called desktop entries. These are simple text files with the extension `.desktop`, and this is a brief guide to how they work. You don't necessarily need to create or edit these files by hand, the exact instructions for dealing with shortcuts using GUIs will vary between desktop environments, whereas the file format itself and other details below are standard.
+Desktop shortcuts and menu shortcuts in Linux are defined by files called desktop entries. These are simple text files with the extension `.desktop`, and this is a brief guide to how they work. You don't necessarily need to create or edit these files by hand, but you can — and besides, the exact instructions for dealing with shortcuts using GUIs will vary between desktop environments, whereas the file format itself and other details below are standard.
 
 ## Locations
 
