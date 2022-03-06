@@ -164,10 +164,7 @@ def _main():
     compat_tool_mapping = get_compatibility_tool_mapping()
     # App ID "0" appears to denote the global default compatibility tool.
     default_compat_tool = compat_tool_mapping.pop("0", None) or "N/A"
-    if default_compat_tool:
-        print(
-            f"Default compatibility tool: {format_name(default_compat_tool)}"
-        )
+    print(f"Default compatibility tool: {format_name(default_compat_tool)}")
     launch_option_mapping = get_launch_option_mapping()
 
     for app_id in get_installed_apps():
