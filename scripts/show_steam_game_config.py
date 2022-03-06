@@ -121,12 +121,19 @@ def get_installed_apps() -> list:
     return installed_app_ids
 
 
-def get_title(app_id: str) -> str:
-    """Given an app ID, get the game's title from the app manifest."""
+def get_app_info(app_id: str) -> tuple:
+    """Given an app ID, get required app information from the app manifest.
+
+    The result is two values: the game's title and a Boolean indicating whether
+    the game is Linux-native. To determine the latter, it is assumed that the
+    ``platform_override_source`` value in the app manifest will be either blank
+    or non-existent if and only if a game runs natively on Linux.
+    """
     with open(
         os.path.join(ROOT, "steamapps", f"appmanifest_{app_id}.acf"), "rt"
     ) as f:
-        return json.loads(vdf_to_json(f.read()))["AppState"]["name"]
+        app_state = json.loads(vdf_to_json(f.read()))["AppState"]
+        return app_state["name"], not app_state["UserConfig"].get("platform_override_source")
 
 
 def format_name(name: str) -> str:
@@ -159,13 +166,17 @@ def _main():
     launch_option_mapping = get_launch_option_mapping()
 
     for app_id in get_installed_apps():
+        title, is_native = get_app_info(app_id)
         compat_tool = compat_tool_mapping.get(app_id)
         launch_options = launch_option_mapping.get(app_id)
         if compat_tool or launch_options:
             print()
-            print(f"{get_title(app_id)} ({app_id})")
+            print(f"{title} ({app_id})")
             if compat_tool:
-                print(f"\tCompatibility Tool: {format_name(compat_tool)}")
+                compat_tool = format_name(compat_tool)
+            else:
+                compat_tool = "N/A" if is_native else "Default"
+            print(f"\tCompatibility Tool: {compat_tool}")
             if launch_options:
                 print(f"\tLaunch Options: {launch_options}")
 
