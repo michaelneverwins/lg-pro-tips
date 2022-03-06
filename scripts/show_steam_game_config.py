@@ -133,7 +133,9 @@ def get_app_info(app_id: str) -> tuple:
         os.path.join(ROOT, "steamapps", f"appmanifest_{app_id}.acf"), "rt"
     ) as f:
         app_state = json.loads(vdf_to_json(f.read()))["AppState"]
-        return app_state["name"], not app_state["UserConfig"].get("platform_override_source")
+        return app_state["name"], not app_state["UserConfig"].get(
+            "platform_override_source"
+        )
 
 
 def format_name(name: str) -> str:
@@ -163,14 +165,16 @@ def _main():
     # App ID "0" appears to denote the global default compatibility tool.
     default_compat_tool = compat_tool_mapping.pop("0", None) or "N/A"
     if default_compat_tool:
-        print(f"Default compatibility tool: {format_name(default_compat_tool)}")
+        print(
+            f"Default compatibility tool: {format_name(default_compat_tool)}"
+        )
     launch_option_mapping = get_launch_option_mapping()
 
     for app_id in get_installed_apps():
-        title, is_native = get_app_info(app_id)
         compat_tool = compat_tool_mapping.get(app_id)
         launch_options = launch_option_mapping.get(app_id)
         if compat_tool or launch_options:
+            title, is_native = get_app_info(app_id)
             print()
             print(f"{title} ({app_id})")
             if compat_tool:
