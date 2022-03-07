@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-"""Shows configuration of installed Steam games.
+"""Shows configuration of installed Steam apps.
 
 Expected output includes the default Steam Play compatibility tool (as
-selected in Steam's global settings) as well as, for each installed game,
+selected in Steam's global settings) as well as, for each installed app,
 the compatibility tool in use (if it differs from the default) and the
 launch options applied (if any).
 
@@ -22,6 +22,7 @@ This script operates on a few assumptions:
 This script comes with no warranty of any kind. Use it at your own risk.
 """
 
+import argparse
 import json
 import os
 import pathlib
@@ -64,7 +65,7 @@ def get_compatibility_tool_mapping() -> dict:
     ``Priority``. Only the ``name`` value is used by this function. The
     purpose of the ``config`` value is unclear as it always seems to be an
     empty string, while the ``Priority`` value seems to be used only to
-    give game-specific compatibility tool selections higher priority than
+    give app-specific compatibility tool selections higher priority than
     the default compatibility tool.
     """
     with open(
@@ -109,7 +110,7 @@ def get_launch_option_mapping() -> dict:
 
 
 def get_installed_apps() -> list:
-    """Get the list of app IDs of currently installed games."""
+    """Get the list of app IDs of currently installed apps."""
     installed_app_ids = []
     for name in os.listdir(os.path.join(ROOT, "steamapps")):
         try:
@@ -124,17 +125,19 @@ def get_installed_apps() -> list:
 def get_app_info(app_id: str) -> tuple:
     """Given an app ID, get required app information from the app manifest.
 
-    The result is two values: the game's title and a Boolean indicating whether
-    the game is Linux-native. To determine the latter, it is assumed that the
-    ``platform_override_source`` value in the app manifest will be either blank
-    or non-existent if and only if a game runs natively on Linux.
+    The result is two values: the app's title and a Boolean indicating
+    whether the app uses Steam Play. It is assumed that the app manifest's
+    ``platform_override_source`` value will be either blank or non-existent
+    if and only if an app runs natively on Linux and therefore does not use
+    Steam Play.
     """
     with open(
         os.path.join(ROOT, "steamapps", f"appmanifest_{app_id}.acf"), "rt"
     ) as f:
         app_state = json.loads(vdf_to_json(f.read()))["AppState"]
-        return app_state["name"], not app_state["UserConfig"].get(
-            "platform_override_source"
+        return (
+            app_state["name"],
+            bool(app_state["UserConfig"].get("platform_override_source")),
         )
 
 
@@ -160,28 +163,67 @@ def format_name(name: str) -> str:
         return "".join(min(pair) for pair in zip(name.title(), name))
 
 
-def _main():
+def _main(args):
     compat_tool_mapping = get_compatibility_tool_mapping()
     # App ID "0" appears to denote the global default compatibility tool.
-    default_compat_tool = compat_tool_mapping.pop("0", None) or "N/A"
-    print(f"Default compatibility tool: {format_name(default_compat_tool)}")
+    default_compat_tool = (
+        format_name(compat_tool_mapping.pop("0", "")) or "N/A"
+    )
+    print(f"Default compatibility tool: {default_compat_tool}")
     launch_option_mapping = get_launch_option_mapping()
 
     for app_id in get_installed_apps():
         compat_tool = compat_tool_mapping.get(app_id)
-        launch_options = launch_option_mapping.get(app_id)
-        if compat_tool or launch_options:
-            title, is_native = get_app_info(app_id)
-            print()
-            print(f"{title} ({app_id})")
+        launch_options = launch_option_mapping.get(app_id, "")
+        if compat_tool or launch_options or args.all_apps:
+            title, steam_play = get_app_info(app_id)
+            print(f"\n{title} ({app_id})")
+            compat_tool = (
+                format_name(compat_tool)
+                if compat_tool
+                else ("Default" if args.default_compat else None)
+                if steam_play
+                else ("N/A" if args.no_compat else None)
+            )
             if compat_tool:
-                compat_tool = format_name(compat_tool)
-            else:
-                compat_tool = "N/A" if is_native else "Default"
-            print(f"\tCompatibility Tool: {compat_tool}")
-            if launch_options:
+                print(f"\tCompatibility Tool: {compat_tool}")
+            if launch_options or args.empty_launch_options:
                 print(f"\tLaunch Options: {launch_options}")
 
 
 if __name__ == "__main__":
-    _main()
+    parser = argparse.ArgumentParser(
+        description=(
+            "Shows compatibility tools and launch options currently in use by "
+            "Steam apps."
+        )
+    )
+    parser.add_argument(
+        "-a",
+        "--all-apps",
+        action="store_true",
+        help=(
+            "Show all apps (including those without launch options or "
+            "compatibility tool overrides)"
+        ),
+    )
+    parser.add_argument(
+        "-d",
+        "--default-compat",
+        action="store_true",
+        help="Explicitly show which apps use the default compatibility tool",
+    )
+    parser.add_argument(
+        "-n",
+        "--no-compat",
+        action="store_true",
+        help="Explicitly show which apps don't use a compatibility tool",
+    )
+    parser.add_argument(
+        "-e",
+        "--empty-launch-options",
+        action="store_true",
+        help="Explicitly print no launch options where none are in use",
+    )
+    args = parser.parse_args()
+    _main(args)
