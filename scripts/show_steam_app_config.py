@@ -172,7 +172,7 @@ def _main(args):
     print(f"Default compatibility tool: {default_compat_tool}")
     launch_option_mapping = get_launch_option_mapping()
 
-    for app_id in get_installed_apps():
+    for app_id in sorted(get_installed_apps(), key=int):
         compat_tool = compat_tool_mapping.get(app_id)
         launch_options = launch_option_mapping.get(app_id, "")
         if compat_tool or launch_options or args.all_apps:
