@@ -21,7 +21,11 @@ In the past, Valve has whitelisted some games as officially supported by Steam P
 
 More recently, Valve's focus has been on official compatibility ratings for **Steam Deck**, a handheld device which ships with SteamOS. This rating system does *not* simply measure Linux/Proton compatibility, and instead rates how well games run on Steam Deck in particular, but we can assume that Steam Deck compatibility is a subset of Linux/Proton compatibility. If a game is Steam Deck Verified, it's safe to say that it runs well on Linux, either natively or with Proton. One step down from Verified is the Playable rating, mostly for games which run but are not well suited to the Steam Deck's handheld user interface. Finally, if a game is marked Unsupported, it may be unplayable with Proton or there may just be some issue with Steam Deck in particular (e.g. Steam Deck officially does not support any game which requires a VR headset).
 
-Currently, the games falling under each Steam Deck compatibility rating can be looked up on SteamDB:
+You can use Steam search to find games rated Verified and Playable for Steam Deck:
+* Steam Deck Verified: [`https://store.steampowered.com/search?category1=998&deck_compatibility=3`](https://store.steampowered.com/search?category1=998&deck_compatibility=3)
+* Steam Deck Playable: [`https://store.steampowered.com/search?category1=998&deck_compatibility=2`](https://store.steampowered.com/search?category1=998&deck_compatibility=2)
+
+The games falling under each Steam Deck compatibility rating can also be looked up on SteamDB:
 * Steam Deck Verified: [`https://steamdb.info/instantsearch/?refinementList[oslist][0]=Steam Deck Verified`](https://steamdb.info/instantsearch/?refinementList%5Boslist%5D%5B0%5D=Steam%20Deck%20Verified)
 * Steam Deck Playable: [`https://steamdb.info/instantsearch/?refinementList[oslist][0]=Steam Deck Playable`](https://steamdb.info/instantsearch/?refinementList%5Boslist%5D%5B0%5D=Steam%20Deck%20Playable)
 * Steam Deck Unsupported: [`https://steamdb.info/instantsearch/?refinementList[oslist][0]=Steam Deck Unsupported`](https://steamdb.info/instantsearch/?refinementList%5Boslist%5D%5B0%5D=Steam%20Deck%20Unsupported)
