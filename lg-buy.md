@@ -14,10 +14,6 @@ Itch.io is notable for being another store with an official desktop app for Linu
 * Linux games: [`https://itch.io/games/platform-linux`](https://itch.io/games/platform-linux)
 * Linux games on sale: [`https://itch.io/games/on-sale/platform-linux`](https://itch.io/games/on-sale/platform-linux)
 
-The site's browser-based games could arguably count as Linux-compatible as well.
-
-* Browser games: [`https://itch.io/games/platform-web`](https://itch.io/games/platform-web)
-
 ## GOG
 GOG, with its famously DRM-free catalog, naturally has some games for your free operating system. Roughly 25% of GOG's games are marked as Linux-compatible.
 
