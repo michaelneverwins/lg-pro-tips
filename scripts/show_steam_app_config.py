@@ -62,9 +62,9 @@ def get_compatibility_tool_mapping() -> dict:
 
     Note: In ``config.vdf``, each value in the compatibility tool mapping
     is actually a nested mapping with three keys: ``name``, ``config``, and
-    ``Priority``. Only the ``name`` value is used by this function. The
+    ``priority``. Only the ``name`` value is used by this function. The
     purpose of the ``config`` value is unclear as it always seems to be an
-    empty string, while the ``Priority`` value seems to be used only to
+    empty string, while the ``priority`` value seems to be used only to
     give app-specific compatibility tool selections higher priority than
     the default compatibility tool.
     """
