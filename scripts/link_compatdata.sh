@@ -50,7 +50,7 @@ do
         # Get the game title from the app manifest; remove any slashes.
 	title=$(grep -oP '"name"\s+"\K.+(?=")' ${manifest} | sed "s/\//-/g")
 	# Use the game title as the name of a symbolic link.
-	link="${COMPATDATA}/${title}"
+	link="$(dirname "${item}")/${title}"
 	# Create the link to the app ID folder if it doesn't already exist.
 	if [ -L "${link}" ]
 	then
