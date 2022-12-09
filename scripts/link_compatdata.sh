@@ -2,8 +2,9 @@
 
 # Steam installs each game to a folder named with the game's title, but each
 # Windows game's Wine prefix occupies a separate folder named with the game's
-# numerical app ID, which can be inconvenient. This simple Bash script creates
-# symbolic links in Steam's `compatdata` folder in order to identify each
+# numerical app ID, which can be inconvenient. Similarly, shader caches are
+# organized by app ID as well. This simple Bash script creates symbolic links
+# in Steam's `compatdata` and `shadercache` folders in order to identify each
 # numerically named folder by the corresponding game's title.
 
 # The games' titles are obtained from the `appmanifest_*.acf` files in the
@@ -15,7 +16,7 @@
 # * that colored output using ANSI escape sequences is supported;
 # * that the user's `steamapps` folder is in the location indicated by the
 #   `STEAMAPPS` variable below (and the user may edit this line if it's wrong);
-# * that the `compatdata` folder contains only two types of things:
+# * that the `compatdata` and `shadercache` folders contain only:
 #   * folders whose names are numerical app IDs of Steam games;
 #   * links created by previous runs of this script.
 
@@ -23,8 +24,9 @@
 
 STEAMAPPS=~/.steam/root/steamapps
 COMPATDATA=${STEAMAPPS}/compatdata
+SHADERCACHE=${STEAMAPPS}/shadercache
 
-for item in ${COMPATDATA}/*
+for item in ${COMPATDATA}/* ${SHADERCACHE}/*
 do
 	# Ignore links.
 	if [ -L "${item}" ]
