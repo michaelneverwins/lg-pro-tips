@@ -12,14 +12,20 @@
 # startup application.
 
 # This script assumes the following:
-# * that colored output using ANSI escape sequences is supported;
-# * that `notify-send` and other dependencies are installed;
+# * that colored output using ANSI escape sequences is supported (for terminal
+#   usage);
+# * that the `notify-send` command is supported (for non-terminal usage);
 # * that the configuration file indicated by the `CONFIG` variable is not used
 #   by any other program.
 
 # This script comes with no warranty of any kind. Use it at your own risk.
 
-CONFIG=~/.config/github_releases
+CONFIG_DIR=${XDG_CONFIG_HOME}
+if [ -z ${CONFIG_DIR} ]
+then
+	CONFIG_DIR=${HOME}/.config
+fi
+CONFIG=${CONFIG_DIR}/github_releases
 
 function _communicate {
 	if [ -t 1 ]
