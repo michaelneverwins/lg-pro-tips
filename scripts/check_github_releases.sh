@@ -21,22 +21,25 @@
 
 CONFIG=~/.config/github_releases
 
-function info {
+function _communicate {
 	if [ -t 1 ]
 	then
-		echo -e "\e[1m${1}\e[0m: ${2}"
+		echo -e "\e[${4};1m${1}:\e[22m ${2}\e[0m"
 	else
-		notify-send "${1}" "${2}"
+		notify-send -i ${3} "${1}" "${2}"
 	fi
 }
 
-function error {
-	if [ -t 1 ]
-	then
-		echo -e "\e[31;1m${1}\e[22m: ${2}\e[0m"
-	else
-		notify-send -i error "${1}" "${2}"
-	fi
+function show_info {
+	_communicate "${1}" "${2}" dialog-information 33
+}
+
+function show_release {
+	_communicate "${1}" "${2}" software-update-available 32
+}
+
+function show_error {
+	_communicate "${1}" "${2}" dialog-error 31
 }
 
 if [ ! -f "${CONFIG}" ]
@@ -57,14 +60,14 @@ then
 #Merrit/nyrna
 #ytdl-org/youtube-dl
 " > ${CONFIG}
-	info "${CONFIG}" "Created default configuration file"
+	show_info "${CONFIG}" "Created default configuration file"
 	exit 0
 fi
 
 readarray -t lines <<< $(egrep "^[^#].+" "${CONFIG}")
 if [ -z "${lines[0]}" ]
 then
-	error "${CONFIG}" "No repositories specified"
+	show_error "${CONFIG}" "No repositories specified"
 	exit 1
 fi
 
@@ -77,10 +80,10 @@ do
 	new=$(curl -i -s ${url} | grep -oP 'releases/tag/\K[^"\r\n]+')
 	if [ -z "${new}" ]
 	then
-		error "${repo}" "Failed to check latest release"
+		show_error "${repo}" "Failed to check latest release"
 	elif [ "${new}" != "${old}" ]
 	then
-		info "${repo}" "New release: ${new}"
+		show_release "${repo}" "New release: ${new}"
 		sed -E s%"^\s*${repo}.*"%"${repo} : ${new}"% -i ${CONFIG}		
 	fi
 done
