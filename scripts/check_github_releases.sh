@@ -84,6 +84,6 @@ do
 	elif [ "${new}" != "${old}" ]
 	then
 		show_release "${repo}" "New release: ${new}"
-		sed -E s%"^\s*${repo}.*"%"${repo} : ${new}"% -i ${CONFIG}		
+		sed -E s?"^\s*${repo}.*"?"${repo} : ${new}"? -i ${CONFIG}
 	fi
 done
