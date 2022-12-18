@@ -15,8 +15,8 @@
 # * that colored output using ANSI escape sequences is supported (for terminal
 #   usage);
 # * that the `notify-send` command is supported (for non-terminal usage);
-# * that the configuration file indicated by the `CONFIG` variable is not used
-#   by any other program.
+# * that the configuration file indicated by the `CONFIG` variable set below is
+#   not used by any other program.
 
 # This script comes with no warranty of any kind. Use it at your own risk.
 
