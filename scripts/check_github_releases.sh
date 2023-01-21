@@ -62,9 +62,10 @@ then
 #Aleph-One-Marathon/alephone
 #bibendovsky/bstone
 #noxworld-dev/opennox
+#dosbox-staging/dosbox-staging
 #flightlessmango/MangoHud
 #Merrit/nyrna
-#ytdl-org/youtube-dl
+#lutris/lutris
 " > ${CONFIG}
 	show_info "${CONFIG}" "Created default configuration file"
 	exit 0
