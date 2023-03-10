@@ -12,4 +12,3 @@ I started writing some things, and I figured, "hey, why not version-control this
 * [create links identifying Steam-managed Wine prefixes and shader caches by game titles](scripts/link_compatdata.sh)
 * [replace "Play this game on Steam" with game descriptions in Steam-managed shortcuts](scripts/update_steam_shortcuts.sh)
 * [show the current Steam Play configuration and launch options for each Steam game](scripts/show_steam_app_config.py)
-* [launch one of multiple games, e.g. from a single desktop shortcut](scripts/multilaunch.sh)

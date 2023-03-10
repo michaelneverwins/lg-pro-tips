@@ -35,7 +35,6 @@
 SHORTCUT_DIRS=(
 	~/.local/share/applications
 	~/Desktop
-	~/Desktop/More
 )
 LIBRARY_CACHE_DIRS=(
 	~/.steam/root/userdata/*/config/librarycache
