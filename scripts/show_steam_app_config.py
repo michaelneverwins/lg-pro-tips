@@ -79,6 +79,16 @@ def get_compatibility_tool_mapping() -> dict:
     return {app_id: tool["name"] for app_id, tool in mapping.items()}
 
 
+def _try_keys(dictionary, keys):
+    for k in keys:
+        try:
+            return dictionary[k]
+        except KeyError:
+            continue
+    else:
+        raise KeyError("|".join(keys))
+
+
 def get_launch_option_mapping() -> dict:
     """Get the mapping of app IDs to launch options.
 
@@ -99,7 +109,14 @@ def get_launch_option_mapping() -> dict:
     ) as f:
         config = json.loads(vdf_to_json(f.read()))
 
-    apps = config["UserLocalConfigStore"]["Software"]["Valve"]["Steam"]["Apps"]
+    apps = _try_keys(
+        config["UserLocalConfigStore"]["Software"]["Valve"]["Steam"],
+        # The correct key was "Apps" when I wrote this script, and then it
+        # changed to "apps" and the script broke. Now I don't trust it to stay
+        # lower-case, so I'll just try both. If this happens again, maybe I'll
+        # write a case-insensitive dictionary class or something.
+        ("Apps", "apps"),
+    )
     launch_option_mapping = {}
     for app_id, app_info in apps.items():
         try:
