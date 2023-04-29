@@ -147,6 +147,13 @@ def get_app_info(app_id: str) -> tuple:
     ``platform_override_source`` value will be either blank or non-existent
     if and only if an app runs natively on Linux and therefore does not use
     Steam Play.
+
+    NOTE: This function is now broken. It seems that app manifests no
+    longer contain the ``platform_override_source`` value it uses.
+
+    TODO: Find another way to determine which games use Steam Play, i.e.,
+    to distinguish between Windows games using the default compatibility
+    tool and native Linux games using no compatibility tool.
     """
     with open(
         os.path.join(ROOT, "steamapps", f"appmanifest_{app_id}.acf"), "rt"
@@ -156,6 +163,14 @@ def get_app_info(app_id: str) -> tuple:
             app_state["name"],
             bool(app_state["UserConfig"].get("platform_override_source")),
         )
+
+
+def get_app_name(app_id: str) -> str:
+    """Gets the name associated with the given app ID."""
+    with open(
+        os.path.join(ROOT, "steamapps", f"appmanifest_{app_id}.acf"), "rt"
+    ) as f:
+        return json.loads(vdf_to_json(f.read()))["AppState"]["name"]
 
 
 def format_name(name: str) -> str:
@@ -196,14 +211,20 @@ def _main(args):
         compat_tool = compat_tool_mapping.get(app_id)
         launch_options = launch_option_mapping.get(app_id, "")
         if compat_tool or launch_options or args.all_apps:
-            title, steam_play = get_app_info(app_id)
+            # title, steam_play = get_app_info(app_id)
+            title = get_app_name(app_id)
             print(f"\n{title} ({app_id})")
             compat_tool = (
                 format_name(compat_tool)
                 if compat_tool
-                else ("Default" if args.default_compat else None)
-                if steam_play
-                else ("N/A" if args.no_compat else None)
+                # else ("Default" if args.default_compat else None)
+                # if steam_play
+                # else ("N/A" if args.no_compat else None)
+                else (
+                    "Unspecified"
+                    if args.default_compat or args.no_compat
+                    else None
+                )
             )
             if compat_tool:
                 print(f"\tCompatibility Tool: {compat_tool}")
@@ -216,7 +237,15 @@ if __name__ == "__main__":
         description=(
             "Shows compatibility tools and launch options currently in use by "
             "Steam apps."
-        )
+        ),
+        epilog=(
+            "Note that the -d/--default-compat and -n/--no-compat options "
+            "have the same effect since a change to Steam's app manifest "
+            "format broke this script's ability to distinguish between games "
+            "using the default compatibility tool and those not using Steam "
+            "Play. Thus the output will not differentiate between native "
+            "games and Windows games with no compatibility tool override."
+        ),
     )
     parser.add_argument(
         "-a",
