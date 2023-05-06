@@ -79,6 +79,22 @@ def get_compatibility_tool_mapping() -> dict:
     return {app_id: tool["name"] for app_id, tool in mapping.items()}
 
 
+def get_user_id() -> str:
+    """Get the user ID.
+
+    It is assumed that the most recently modified user data folder is the
+    correct one.
+    """
+    user_data = os.path.join(HOME, ".steam", "root", "userdata")
+    user_id = sorted(
+        os.listdir(user_data),
+        key=lambda basename: os.path.getmtime(
+            os.path.join(user_data, basename)
+        ),
+    )[-1]
+    return user_id
+
+
 def _try_keys(dictionary, keys):
     for k in keys:
         try:
@@ -89,23 +105,19 @@ def _try_keys(dictionary, keys):
         raise KeyError("|".join(keys))
 
 
-def get_launch_option_mapping() -> dict:
-    """Get the mapping of app IDs to launch options.
-
-    This requires reading ``localconfig.vdf`` from a user data directory,
-    of which there may be more than one, so the most recently modified user
-    data directory is used.
-    """
-    user_data = os.path.join(HOME, ".steam", "root", "userdata")
-    user_id = sorted(
-        os.listdir(user_data),
-        key=lambda basename: os.path.getmtime(
-            os.path.join(user_data, basename)
-        ),
-    )[-1]
-
+def get_launch_option_mapping(user_id: str) -> dict:
+    """Get the mapping of app IDs to launch options."""
     with open(
-        os.path.join(user_data, user_id, "config", "localconfig.vdf"), "rt"
+        os.path.join(
+            HOME,
+            ".steam",
+            "root",
+            "userdata",
+            user_id,
+            "config",
+            "localconfig.vdf",
+        ),
+        "rt",
     ) as f:
         config = json.loads(vdf_to_json(f.read()))
 
@@ -126,6 +138,18 @@ def get_launch_option_mapping() -> dict:
     return launch_option_mapping
 
 
+def get_platform_override_mapping(user_id: str) -> dict:
+    """Get the mapping of app IDs to platform override information."""
+    with open(
+        os.path.join(
+            HOME, ".steam", "root", "userdata", user_id, "config", "compat.vdf"
+        ),
+        "rt",
+    ) as f:
+        config = json.loads(vdf_to_json(f.read()))
+    return config["platform_overrides"]
+
+
 def get_installed_apps() -> list:
     """Get the list of app IDs of currently installed apps."""
     installed_app_ids = []
@@ -137,32 +161,6 @@ def get_installed_apps() -> list:
         except TypeError:
             pass
     return installed_app_ids
-
-
-def get_app_info(app_id: str) -> tuple:
-    """Given an app ID, get required app information from the app manifest.
-
-    The result is two values: the app's title and a Boolean indicating
-    whether the app uses Steam Play. It is assumed that the app manifest's
-    ``platform_override_source`` value will be either blank or non-existent
-    if and only if an app runs natively on Linux and therefore does not use
-    Steam Play.
-
-    NOTE: This function is now broken. It seems that app manifests no
-    longer contain the ``platform_override_source`` value it uses.
-
-    TODO: Find another way to determine which games use Steam Play, i.e.,
-    to distinguish between Windows games using the default compatibility
-    tool and native Linux games using no compatibility tool.
-    """
-    with open(
-        os.path.join(ROOT, "steamapps", f"appmanifest_{app_id}.acf"), "rt"
-    ) as f:
-        app_state = json.loads(vdf_to_json(f.read()))["AppState"]
-        return (
-            app_state["name"],
-            bool(app_state["UserConfig"].get("platform_override_source")),
-        )
 
 
 def get_app_name(app_id: str) -> str:
@@ -205,26 +203,23 @@ def _main(args):
         format_name(compat_tool_mapping.pop("0", "")) or "N/A"
     )
     print(f"Default compatibility tool: {default_compat_tool}")
-    launch_option_mapping = get_launch_option_mapping()
+    user_id = get_user_id()
+    launch_option_mapping = get_launch_option_mapping(user_id)
+    platform_override_mapping = get_platform_override_mapping(user_id)
 
     for app_id in sorted(get_installed_apps(), key=int):
         compat_tool = compat_tool_mapping.get(app_id)
         launch_options = launch_option_mapping.get(app_id, "")
         if compat_tool or launch_options or args.all_apps:
-            # title, steam_play = get_app_info(app_id)
             title = get_app_name(app_id)
+            platform_override = platform_override_mapping.get(app_id)
             print(f"\n{title} ({app_id})")
             compat_tool = (
                 format_name(compat_tool)
                 if compat_tool
-                # else ("Default" if args.default_compat else None)
-                # if steam_play
-                # else ("N/A" if args.no_compat else None)
-                else (
-                    "Unspecified"
-                    if args.default_compat or args.no_compat
-                    else None
-                )
+                else ("Default" if args.default_compat else None)
+                if platform_override is not None and platform_override["dest"]
+                else ("N/A" if args.no_compat else None)
             )
             if compat_tool:
                 print(f"\tCompatibility Tool: {compat_tool}")
@@ -237,15 +232,7 @@ if __name__ == "__main__":
         description=(
             "Shows compatibility tools and launch options currently in use by "
             "Steam apps."
-        ),
-        epilog=(
-            "Note that the -d/--default-compat and -n/--no-compat options "
-            "have the same effect since a change to Steam's app manifest "
-            "format broke this script's ability to distinguish between games "
-            "using the default compatibility tool and those not using Steam "
-            "Play. Thus the output will not differentiate between native "
-            "games and Windows games with no compatibility tool override."
-        ),
+        )
     )
     parser.add_argument(
         "-a",
