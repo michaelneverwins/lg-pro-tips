@@ -5,7 +5,7 @@
 # then fails to change it back on exit (which happens to me when I run Wolf4SDL
 # and a few others). To that end, the script can also wrap a command given as
 # arguments, e.g.:
-#     ./xrandr-auto.sh wolf4sdl
+#     ./xrandr_auto.sh wolf4sdl
 # Yes, I know, I really should just install gamescope or something.
 
 # I can't say that I have total confidence in the `grep` below, but it works on
