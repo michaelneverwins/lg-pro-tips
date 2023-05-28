@@ -27,7 +27,9 @@
 #   have a desktop entry named "foo.bar.something.desktop";
 # * that Flatpak program desktop entries' names never contain spaces;
 # * that Flatpak desktop entries (or links to them) are found in the locations
-#   specified above.
+#   specified above;
+# * that the last parts of all installed Flatpak program names are unique,
+#   insensitive to case.
 
 # Moreover, it is assumed that there is only one copy of each Flatpak program
 # installed. Specifically, if the same Flatpak program is installed system-wide
