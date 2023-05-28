@@ -32,7 +32,7 @@
 # Moreover, it is assumed that there is only one copy of each Flatpak program
 # installed. Specifically, if the same Flatpak program is installed system-wide
 # and for the current user, this script will not differentiate between the two.
-# It will simply create one script in (or, rather, create it twice with the
+# It will simply create one script for it (or, rather, create it twice with the
 # second copy overwriting the first), and the command executed by that script
 # will be `flatpak run ...` with no `--user` or `--system` argument. I assume
 # Flatpak will run the system-installed copy in this case.
