@@ -66,6 +66,9 @@ do
 			echo -en "\e[31m"
 		fi
 		echo -e "Existing link:\e[39m '${link}' -> '${target}'"
+	elif [ -e "${link}" ]
+	then
+		echo -e "\e[31mFile or directory exists:\e[39m '${link}'"
 	else
 		echo -en "\e[32mCreating link:\e[39m "
 		ln -sv ${number} "${link}"
@@ -84,6 +87,9 @@ do
 			echo -en "\e[31m"
 		fi
 		echo -e "Existing link:\e[39m '${link}' -> '${target}'"
+	elif [ -e "${link}" ]
+	then
+		echo -e "\e[31mFile or directory exists:\e[39m '${link}'"
 	else
 		echo -en "\e[32mCreating link:\e[39m "
 		ln -sv "${item}" "${link}"
