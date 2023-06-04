@@ -5,24 +5,28 @@
 # numerical app ID, which can be inconvenient. Similarly, shader caches are
 # organized by app ID as well. This simple Bash script creates symbolic links
 # in Steam's `compatdata` and `shadercache` folders in order to identify each
-# numerically named folder by the corresponding game's title.
+# numerically named folder by the corresponding game's title. Additionally, it
+# creates `compatdata` and `shadercache` links in each game's install folder
+# for easier navigation from the Steam client (which has an option to open a
+# game's install folder in a file manager but no such options for the other
+# locations).
 
-# The games' titles are obtained from the `appmanifest_*.acf` files in the
-# `steamapps` folder, of which there should be one for each installed game, so
-# this works only for currently installed games, even if an uninstalled game
-# has left a Wine prefix behind.
+# Games' titles and install folders are obtained from the `appmanifest_*.acf`
+# files in the `steamapps` folder, of which there should be one for each
+# installed game, so this works only for currently installed games, even if an
+# uninstalled game has left a Wine prefix behind. Note also that some folders
+# in `compatdata` and `shadercache` may not correspond to any app manifest,
+# such as those created for non-Steam games.
 
 # This script operates on a few assumptions:
 # * that colored output using ANSI escape sequences is supported;
 # * that the user's `steamapps` folder is in the location indicated by the
-#   `STEAMAPPS` variable below (and the user may edit this line if it's wrong);
-# * that the `compatdata` and `shadercache` folders contain only:
-#   * folders whose names are numerical app IDs of Steam games;
-#   * links created by previous runs of this script.
+#   `STEAMAPPS` variable below (and the user may edit this line if it's wrong).
 
 # This script comes with no warranty of any kind. Use it at your own risk.
 
 STEAMAPPS=~/.steam/root/steamapps
+COMMON=${STEAMAPPS}/common
 COMPATDATA=${STEAMAPPS}/compatdata
 SHADERCACHE=${STEAMAPPS}/shadercache
 
@@ -47,7 +51,7 @@ do
 		echo -e "\e[31mNo app manifest for app ID:\e[39m ${number}"
 		continue
 	fi
-        # Get the game title from the app manifest; remove any slashes.
+	# Get the game title from the app manifest; remove any slashes.
 	title=$(grep -oP '"name"\s+"\K.+(?=")' ${manifest} | sed "s/\//-/g")
 	# Use the game title as the name of a symbolic link.
 	link="$(dirname "${item}")/${title}"
@@ -65,5 +69,23 @@ do
 	else
 		echo -en "\e[32mCreating link:\e[39m "
 		ln -sv ${number} "${link}"
+	fi
+	# Get the game's install folder name from the app manifest.
+	installdir=$(grep -oP '"installdir"\s+"\K.+(?=")' ${manifest})
+	# Create a link from the install folder if it doesn't already exist.
+	link="${COMMON}/${installdir}/$(basename $(dirname "${item}"))"
+	if [ -L "${link}" ]
+	then
+		target=$(readlink "${link}")
+		if [ "${target}" == "${item}" ]
+		then
+			echo -en "\e[33m"
+		else
+			echo -en "\e[31m"
+		fi
+		echo -e "Existing link:\e[39m '${link}' -> '${target}'"
+	else
+		echo -en "\e[32mCreating link:\e[39m "
+		ln -sv "${item}" "${link}"
 	fi
 done
