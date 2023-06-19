@@ -40,16 +40,36 @@ LIBRARY_CACHE_DIRS=(
 	~/.steam/root/userdata/*/config/librarycache
 )
 
+new_only=true
+while getopts 'ah' opt
+do
+	case "${opt}" in
+		a)
+			new_only=false
+			;;
+		h)
+			echo "Usage: $0 [-a]"
+			echo 'Options:'
+			echo -e '\t-a\tUpdate all shortcuts (not just those with default comment)'
+			exit 0
+			;;
+	esac
+done
+
 for shortcut_dir in "${SHORTCUT_DIRS[@]}"
 do
 	for shortcut in "${shortcut_dir}"/*.desktop
 	do
-		app_id=$(grep -m 1 -oP "Exec=steam steam://rungameid/\K\d+" "${shortcut}")
+		if ${new_only} && ! grep -q 'Comment=Play this game on Steam' "${shortcut}"
+		then
+			continue
+		fi
+		app_id=$(grep -m 1 -oP 'Exec=steam steam://rungameid/\K\d+' "${shortcut}")
 		if [ -z ${app_id} ]
 		then
 			continue
 		fi
-		title=$(grep -m 1 -oP "Name=\K.+" "${shortcut}")
+		title=$(grep -m 1 -oP 'Name=\K.+' "${shortcut}")
 		for cache_dir in ${LIBRARY_CACHE_DIRS[@]}
 		do
 			cache_file=${cache_dir}/${app_id}.json
@@ -62,7 +82,7 @@ do
 			then
 				continue
 			fi
-			sed s/Comment=.*/"Comment=$(sed s/'[\/&]'/'\\&'/g <<< ${comment})"/g -i "${shortcut}"
+			sed s/'Comment=*'/"Comment=$(sed s/'[\/&]'/'\\&'/g <<< ${comment})"/g -i "${shortcut}"
 			echo -e "\e[32mUpdated shortcut for ${title} (${app_id}) in '${shortcut_dir}'\e[39m"
 			continue 2
 		done
