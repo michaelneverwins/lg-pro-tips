@@ -82,7 +82,7 @@ do
 			then
 				continue
 			fi
-			sed s/'Comment=*'/"Comment=$(sed s/'[\/&]'/'\\&'/g <<< ${comment})"/g -i "${shortcut}"
+			sed s/'Comment=.*'/"Comment=$(sed s/'[\/&]'/'\\&'/g <<< ${comment})"/g -i "${shortcut}"
 			echo -e "\e[32mUpdated shortcut for ${title} (${app_id}) in '${shortcut_dir}'\e[39m"
 			continue 2
 		done
