@@ -1,7 +1,6 @@
 #!/bin/bash -e
 
-# For each Flatpak program with a desktop entry file (or link) located in
-# /var/lib/flatpak/exports/share/applications/, this script creates a one-line
+# For each Flatpak program with a desktop entry file, this script creates a
 # script in ~/.local/bin/ to run the corresponding program. Each script's name
 # is the last part of the Flatpak program's name, converted to lowercase. For
 # example, if the Flatpak version of Lutris is installed, this script should
