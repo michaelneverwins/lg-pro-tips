@@ -12,7 +12,8 @@
 # for a system install or user install, respectively, and create a script at
 #   ~/.local/bin/lutris
 # which contains
-#   flatpak run net.lutris.Lutris
+#   #!/bin/sh
+#   flatpak run net.lutris.Lutris $@
 
 # The purpose of this script is simply to save me the trouble of typing the
 # entire `flatpak run foo.bar.something` command when I want to run something.
@@ -60,6 +61,7 @@ do
 	fi
 	flatpak_name=$(basename ${desktop_entry} .desktop)
 	runner_script=${runner_dir}/$(sed -e ${last_lower} <<< ${flatpak_name})
-	echo "flatpak run ${flatpak_name}" > ${runner_script}
+	echo "#!/bin/sh" > ${runner_script}
+	echo "flatpak run ${flatpak_name} \$@" >> ${runner_script}
 	chmod -v u+x ${runner_script}
 done
