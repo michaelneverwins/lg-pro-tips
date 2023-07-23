@@ -48,6 +48,9 @@ else
 	runner_dir=~/.local/bin
 fi
 
+ignore_list=(
+	# Add Flatpak packages to be ignored by this script, one per line.
+)
 last_lower='s/.\+\.\([^\.]\+\)$/\L\1/'
 
 for desktop_entry in \
@@ -59,8 +62,22 @@ do
 		continue
 	fi
 	flatpak_name=$(basename ${desktop_entry} .desktop)
+	for ignored_name in "${ignore_list[@]}"
+	do
+		if [ "${flatpak_name}" == "${ignored_name}" ]
+		then
+			echo "Skipping ${ignored_name}"
+			continue 2
+		fi
+	done
 	runner_script=${runner_dir}/$(sed -e ${last_lower} <<< ${flatpak_name})
-	echo "#!/bin/sh" > ${runner_script}
-	echo "flatpak run ${flatpak_name} \$@" >> ${runner_script}
-	chmod -v u+x ${runner_script}
+	if [ -f "${runner_script}" ]
+	then
+		echo "Already exists: '${runner_script}'"
+	else
+		echo "Creating '${runner_script}'"
+		echo "#!/bin/sh" > ${runner_script}
+		echo "flatpak run ${flatpak_name} \$@" >> ${runner_script}
+		chmod -v u+x ${runner_script}
+	fi
 done
