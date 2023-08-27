@@ -207,11 +207,19 @@ def _main(args):
     launch_option_mapping = get_launch_option_mapping(user_id)
     platform_override_mapping = get_platform_override_mapping(user_id)
 
-    for app_id in sorted(get_installed_apps(), key=int):
+    apps_to_check = get_installed_apps()
+    if args.apps and not args.title:
+        apps_to_check = set(apps_to_check).intersection(args.apps)
+
+    for app_id in sorted(apps_to_check, key=int):
         compat_tool = compat_tool_mapping.get(app_id)
         launch_options = launch_option_mapping.get(app_id, "")
         if compat_tool or launch_options or args.all_apps:
             title = get_app_name(app_id)
+            if args.title and args.apps and not any(
+                t.lower() in title.lower() for t in args.apps
+            ):
+                continue
             platform_override = platform_override_mapping.get(app_id)
             print(f"\n{title} ({app_id})")
             compat_tool = (
@@ -261,5 +269,22 @@ if __name__ == "__main__":
         action="store_true",
         help="Explicitly print no launch options where none are in use",
     )
+    parser.add_argument(
+        "-t",
+        "--title",
+        action="store_true",
+        help=(
+            "Positional arguments are game titles, not app IDs (enabled "
+            "automatically if non-numerical positional arguments are given)"
+        ),
+    )
+    parser.add_argument(
+        "apps",
+        metavar="APP",
+        nargs="*",
+        help="App IDs or game titles"
+    )
     args = parser.parse_args()
+    args.all_apps = args.all_apps or bool(args.apps)
+    args.title = args.title or not all(a.isdigit() for a in args.apps)
     _main(args)
