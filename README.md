@@ -15,3 +15,4 @@ I started writing some things, and I figured, "hey, why not version-control this
 * [launch one of multiple games, e.g. from a single desktop shortcut](scripts/multilaunch.sh)
 * [reset display settings with `xrandr` on game exit](scripts/xrandr_auto.sh)
 * [create runner scripts in `~/.local/bin` for Flatpak programs](scripts/flat2path.sh)
+* [fix the categorization of shortcuts created by Bottles](scripts/fix_bottles_shortcuts.sh)
