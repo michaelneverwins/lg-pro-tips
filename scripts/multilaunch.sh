@@ -30,7 +30,8 @@ USAGE="$0 BASE_TITLE BASE_ARGS 1ST_TITLE 1ST_ARGS 2ND_TITLE 2ND_ARGS ..."
 
 # This script comes with no warranty of any kind. Use it at your own risk.
 # Moreover, anything that may appear to be a bug is actually a feature, as I
-# hereby declare that this script is supposed to do precisely whatever it does.
+# hereby declare that this script is supposed to do precisely whatever it does,
+# unless it breaks something on your system in which case that's user error.
 
 if [ $# -eq 0 ]
 then
