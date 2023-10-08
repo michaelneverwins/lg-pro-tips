@@ -72,7 +72,7 @@ echo
 read -p "Which game? " input
 if [ ${input} -gt 0 ] && [ ${input} -le ${i} ]
 then
-	${choices[$((${input}-1))]}
+	sh -c "${choices[$((${input}-1))]}"
 else
 	exit 1
 fi
