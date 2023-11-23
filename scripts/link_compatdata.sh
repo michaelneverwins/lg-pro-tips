@@ -4,50 +4,58 @@
 # Windows game's Wine prefix occupies a separate folder named with the game's
 # numerical app ID, which can be inconvenient. Similarly, shader caches are
 # organized by app ID as well. This simple Bash script creates symbolic links
-# in Steam's `compatdata` and `shadercache` folders in order to identify each
-# numerically named folder by the corresponding game's title. Additionally, it
-# creates `compatdata` and `shadercache` links in each game's install folder
-# for easier navigation from the Steam client (which has an option to open a
-# game's install folder in a file manager but no such options for the other
-# locations).
+# in Steam's `compatdata`, `shadercache`, and `userdata/*` folders in order to
+# identify each numerically named folder by the corresponding game's title.
+# Additionally, it creates `_compatdata`, `_shadercache`, and `_userdata` links
+# in each game's install folder for easier navigation from the Steam client
+# (which has an option to open a game's install folder in a file manager but no
+# such options for the other locations).
 
 # Games' titles and install folders are obtained from the `appmanifest_*.acf`
 # files in the `steamapps` folder, of which there should be one for each
 # installed game, so this works only for currently installed games, even if an
 # uninstalled game has left a Wine prefix behind. Note also that some folders
 # in `compatdata` and `shadercache` may not correspond to any app manifest,
-# such as those created for non-Steam games.
+# such as those created for non-Steam games. There may also be `compatdata` and
+# `userdata` folders for non-game app IDs.
 
 # This script operates on a few assumptions:
 # * that colored output using ANSI escape sequences is supported;
 # * that the user's `steamapps` folder is in the location indicated by the
-#   `STEAMAPPS` variable below (and the user may edit this line if it's wrong).
+#   `STEAMAPPS` variable below (and the user may edit this line if it's wrong);
+# * that there is only one `userdata/*/x` for each app ID `x`, which seems like
+#   a safe assumption and allows us to use "userdata" instead of user IDs in
+#   the names of links from install folders to userdata folders;
+# * that the `compatdata`, `shadercache`, and `userdata/*` folders contain only:
+#   * folders whose names are numerical app IDs;
+#   * links created by previous runs of this script.
 
 # This script comes with no warranty of any kind. Use it at your own risk.
 
-STEAMAPPS=~/.steam/root/steamapps
+STEAMROOT=~/.steam/root
+STEAMAPPS=${STEAMROOT}/steamapps
 COMMON=${STEAMAPPS}/common
 COMPATDATA=${STEAMAPPS}/compatdata
 SHADERCACHE=${STEAMAPPS}/shadercache
+USERDATA=${STEAMROOT}/userdata/*
 
-for item in ${COMPATDATA}/* ${SHADERCACHE}/*
+for item in ${COMPATDATA}/* ${SHADERCACHE}/* ${USERDATA}/*
 do
 	# Ignore links.
 	if [ -L "${item}" ]
 	then
 		continue
 	fi
-	# Assume anything else is a folder with an app ID name.
+	# Assume anything else of interest is a folder with an app ID name.
 	number=$(basename "${item}")
+	if ! [[ ${number} =~ ^[0-9]+$ ]]
+	then
+		continue
+	fi
 	# Locate the app manifest file; if it doesn't exist, skip this item.
 	manifest=${STEAMAPPS}/appmanifest_${number}.acf
 	if [ ! -f "${manifest}" ]
 	then
-		# App ID "0" seems to have some special use; it's not a game.
-		if [ ${number} -eq "0" ]
-		then
-			continue
-		fi
 		echo -e "\e[31mNo app manifest for app ID:\e[39m ${number}"
 		continue
 	fi
@@ -76,7 +84,12 @@ do
 	# Get the game's install folder name from the app manifest.
 	installdir=$(grep -oP '"installdir"\s+"\K.+(?=")' ${manifest})
 	# Create a link from the install folder if it doesn't already exist.
-	link="${COMMON}/${installdir}/$(basename $(dirname "${item}"))"
+	if grep -Eq '.+/userdata/[^/]+/[^/]+$' <<< "${item}"
+	then
+		link="${COMMON}/${installdir}/_userdata"
+	else
+		link="${COMMON}/${installdir}/_$(basename $(dirname "${item}"))"
+	fi
 	if [ -L "${link}" ]
 	then
 		target=$(readlink "${link}")
