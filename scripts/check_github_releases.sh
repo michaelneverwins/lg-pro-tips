@@ -20,11 +20,7 @@
 
 # This script comes with no warranty of any kind. Use it at your own risk.
 
-CONFIG_DIR=${XDG_CONFIG_HOME}
-if [ -z ${CONFIG_DIR} ]
-then
-	CONFIG_DIR=${HOME}/.config
-fi
+CONFIG_DIR=${XDG_CONFIG_HOME:-${HOME}/.config}
 CONFIG=${CONFIG_DIR}/github_releases
 
 function _communicate {
