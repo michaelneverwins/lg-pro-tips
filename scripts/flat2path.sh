@@ -12,7 +12,7 @@
 #   ~/.local/bin/lutris
 # which contains
 #   #!/bin/sh
-#   flatpak run net.lutris.Lutris $@
+#   flatpak run net.lutris.Lutris "$@"
 
 # The purpose of this script is simply to save me the trouble of typing the
 # entire `flatpak run foo.bar.something` command when I want to run something.
@@ -77,7 +77,7 @@ do
 	else
 		echo "Creating '${runner_script}'"
 		echo "#!/bin/sh" > ${runner_script}
-		echo "flatpak run ${flatpak_name} \$@" >> ${runner_script}
+		echo "flatpak run ${flatpak_name} "'"$@"' >> ${runner_script}
 		chmod -v u+x ${runner_script}
 	fi
 done
