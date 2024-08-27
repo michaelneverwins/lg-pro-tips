@@ -97,9 +97,17 @@ The `--theme` option was not used and `hicolor` is the default, so this would in
 ~/.local/share/icons/hicolor/48x48/apps/darkula.png
 ~/.local/share/icons/hicolor/256x256/apps/darkula.png
 ```
-With these in place, I could then set the icon for my _Darkula_ shortcut as follows:
+With these in place, I could then set my _Darkula_ shortcut's `Icon` value to `darkula`:
 ```
+[Desktop Entry]
+Name=Darkula
+Comment=Go bring darkness back to the night
+Path=/home/michael/.local/share/games/Darkula
+Exec=wine Darkula.exe
 Icon=darkula
+Terminal=false
+Type=Application
+Categories=Game;
 ```
 If I don't want these icons anymore, they could then be uninstalled as follows:
 ```bash
