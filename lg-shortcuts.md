@@ -38,9 +38,9 @@ Categories=Game;
 * The `Path` value is the working directory from which the program is to be executed.
   * In this case, it's the directory into which I extracted `Darkula.exe` from `Darkula.zip`:
     ```bash
-    wget https://locomalito.com/juegos/Darkula.zip -P ~/Downloads
+    wget https://locomalito.com/files/darkula.zip -P ~/Downloads
     mkdir -p ~/.local/share/games/Darkula
-    unzip ~/Downloads/Darkula.zip -d ~/.local/share/games/Darkula
+    unzip ~/Downloads/darkula.zip -d ~/.local/share/games/Darkula
     ```
 * The `Exec` field contains the program and any arguments, as you would execute it from the command line.
   * In this case, the shortcut runs `wine` with the argument `Darkula.exe`.
@@ -52,16 +52,62 @@ Categories=Game;
 For the full specification of the file format, see [`https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html`](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html).
 
 ## Icons
-If you're creating your own desktop entry, you'll probably want an icon. The `Icon` field may reference an icon by name — for example, the desktop entry for Steam simply has `Icon=steam` — but you can also put a file path here, which is useful if you're creating a shortcut for something you've installed manually.
+If you're creating your own desktop entry, you'll probably want an icon. The `Icon` field may reference an icon by name — for example, the desktop entry for Steam simply has `Icon=steam` — but you can also put an absolute file path here, which is useful if you're creating a shortcut for something you've installed manually.
 
+### Extracting Icons
 When you install a Windows game, it won't always come with a separate image file which is suitable for shortcut icons. Windows executables often have embedded icons, so shortcuts to those programs on Windows will get icons automatically. On Linux, we can extract the icons from Windows executables. A couple of useful programs are `wrestool` and `icotool`, which may be available for your Linux distribution via the `icoutils` package. The `Darkula.ico` file used in my desktop entry for *Darkula* was created using `wrestool` as follows:
 ```bash
 cd ~/.local/share/games/Darkula
 wrestool -o Darkula.ico -t 14 -x Darkula.exe
 ```
-On my system, simply using this `.ico` file as the shortcut icon works. If that were not the case, then I could also use `icotool` to extract a `.png` file from the `.ico` file:
+On my system, simply using this `.ico` file as the shortcut icon works. If that were not the case, then I could also use `icotool` to extract image files from this `.ico` file:
+```bash
+cd ~/.local/share/games/Darkula
+icotool -o . -x Darkula.ico
+```
+This particular `.ico` file happens to contain five images in PNG format; the above command creates `Darkula_1_16x16x32.png`, `Darkula_2_24x24x32.png`, `Darkula_3_32x32x32.png`, `Darkula_4_48x48x32.png`, and `Darkula_5_256x256x32.png`. If I just want to reference a file path in my desktop entry, then I really need just one `.png` file, and I could also tell `icotool` to give me just one by passing a new file name (instead of an existing directory) to the `-o` option:
 ```bash
 cd ~/.local/share/games/Darkula
 icotool -o Darkula.png -x Darkula.ico
 ```
-The exact usage of these tools will vary. Run `wrestool --help` and `icotool --help` for general usage, or `man wrestool` and `man icotool` for more detailed information.
+In this case, the above command will extract the 256x256 icon. The tool has additional options for matching an appropriate image if you don't like what it gives you by default, but again, you can always just extract everything.
+
+In general, the exact usage of these tools will vary. Run `wrestool --help` and `icotool --help` for general usage, or `man wrestool` and `man icotool` for more detailed information.
+
+### Installing Icons
+While the `Icon` field of a desktop entry will accept an absolute file path, it can also reference the name of an installed icon resource. Icons already installed at the system level can typically be found under `/usr/share/icons`, while user icons (which can override the system icons) will be under `~/.local/share/icons`. Within each of these locations, the directory structure will organize icons first by theme, then by size, and then by type.
+
+The `xdg-icon-resource` command can be used for installing your own icons to the appropriate folders so that your shortcuts can reference them by name. This may be preferable to referencing a single file path, because a name can reference a whole set of icons, thus allowing your shortcut to display an icon of the appropriate size. This isn't just a matter of scaling; a program may have aesthetically different icons at different sizes. For example, the 256x256 _Darkula_ icon is different from the others.
+
+The following example usage of `xdg-icon-resource` would install the five _Darkula_ icons created in the previous subsection:
+```bash
+cd ~/.local/share/games/Darkula
+xdg-icon-resource install --noupdate --novendor --size 16 Darkula_1_16x16x32.png darkula
+xdg-icon-resource install --noupdate --novendor --size 24 Darkula_2_24x24x32.png darkula
+xdg-icon-resource install --noupdate --novendor --size 32 Darkula_3_32x32x32.png darkula
+xdg-icon-resource install --noupdate --novendor --size 48 Darkula_4_48x48x32.png darkula
+xdg-icon-resource install --noupdate --novendor --size 256 Darkula_5_256x256x32.png darkula
+xdg-icon-resource forceupdate
+```
+The `--theme` option was not used and `hicolor` is the default, so this would install the icons to the following locations:
+```
+~/.local/share/icons/hicolor/16x16/apps/darkula.png
+~/.local/share/icons/hicolor/24x24/apps/darkula.png
+~/.local/share/icons/hicolor/32x32/apps/darkula.png
+~/.local/share/icons/hicolor/48x48/apps/darkula.png
+~/.local/share/icons/hicolor/256x256/apps/darkula.png
+```
+With these in place, I could then set the icon for my _Darkula_ shortcut as follows:
+```
+Icon=darkula
+```
+If I don't want these icons anymore, they could then be uninstalled as follows:
+```bash
+xdg-icon-resource uninstall --noupdate --size 16 darkula
+xdg-icon-resource uninstall --noupdate --size 24 darkula
+xdg-icon-resource uninstall --noupdate --size 32 darkula
+xdg-icon-resource uninstall --noupdate --size 48 darkula
+xdg-icon-resource uninstall --noupdate --size 256 darkula
+xdg-icon-resource forceupdate
+```
+For more information, run `man xdg-icon-resource` to see the manual, which isn't a long read as far as manuals go.
