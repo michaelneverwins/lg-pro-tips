@@ -36,7 +36,7 @@ Categories=Game;
 * The `Name` value is the name displayed on the shortcut. The file name may be something else.
 * The `Comment` value is some text that may be displayed in your menu.
 * The `Path` value is the working directory from which the program is to be executed.
-  * In this case, it's the directory into which I extracted `Darkula.exe` from `Darkula.zip`:
+  * In this case, it's the directory into which I extracted `Darkula.exe` from `darkula.zip`:
     ```bash
     wget https://locomalito.com/files/darkula.zip -P ~/Downloads
     mkdir -p ~/.local/share/games/Darkula
