@@ -77,7 +77,7 @@ In general, the exact usage of these tools will vary. Run `wrestool --help` and 
 ### Installing Icons
 While the `Icon` field of a desktop entry will accept an absolute file path, it can also reference the name of an installed icon resource. Icons already installed at the system level can typically be found under `/usr/share/icons`, while user icons (which can override the system icons) will be under `~/.local/share/icons`. Within each of these locations, the directory structure will organize icons first by theme, then by size, and then by type.
 
-The `xdg-icon-resource` command can be used for installing your own icons to the appropriate folders so that your shortcuts can reference them by name. This may be preferable to referencing a single file path, because a name can reference a whole set of icons, thus allowing your shortcut to display an icon of the appropriate size. This isn't just a matter of scaling; a program may have aesthetically different icons at different sizes. For example, the 256x256 _Darkula_ icon is different from the others.
+The `xdg-icon-resource` command can be used for installing your own icons to the appropriate folders so that your shortcuts can reference them by name. This may be preferable to referencing an absolute file path, because a name can reference a whole set of icons, thus allowing your shortcut to display an icon of the appropriate size. This isn't just a matter of scaling; a program may have aesthetically different icons at different sizes. For example, the 256x256 _Darkula_ icon is different from the others.
 
 The following example usage of `xdg-icon-resource` would install the five _Darkula_ icons created in the previous subsection:
 ```bash
