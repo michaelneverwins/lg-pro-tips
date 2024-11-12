@@ -9,7 +9,7 @@ This is perhaps the most obvious one, as Valve has made a point of providing out
 * Another view of Linux games on sale via SteamDB: [`https://steamdb.info/sales/?category=999&displayOnly=Game`](https://steamdb.info/sales/?category=999&displayOnly=Game)
 
 ## Itch.io
-Itch.io is notable for being another store with an official desktop app for Linux. Like Steam, it can install Windows games and run them (in this case using Wine), but if you want games specifically for Linux, it has a few tens of thousands of those too. About 9% of the store's immense indie catalog is Linux-compatible.
+Itch.io is notable for being another store with an official desktop app for Linux. Like Steam, it can install Windows games and run them (if you have Wine installed), but if you want games specifically for Linux, it has a few tens of thousands of those too. About 9% of the store's immense indie catalog is Linux-compatible.
 
 * Linux games: [`https://itch.io/games/platform-linux`](https://itch.io/games/platform-linux)
 * Linux games on sale: [`https://itch.io/games/on-sale/platform-linux`](https://itch.io/games/on-sale/platform-linux)
