@@ -23,8 +23,10 @@ GOG, with its famously DRM-free catalog, naturally has some games for your free 
 The optional Galaxy launcher is still Windows-only, but there are some unofficial GOG clients for Linux:
 
 * Minigalaxy: [`https://github.com/sharkwouter/minigalaxy/releases`](https://github.com/sharkwouter/minigalaxy/releases)
-* Heroic: [`https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher`](https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher)
+* Heroic Games Launcher: [`https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher`](https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher)
   * This one was originally an unofficial Epic Games Store launcher, but has since added support for GOG as well.
+* LGOGDownloader: [`https://github.com/Sude-/lgogdownloader`](https://github.com/Sude-/lgogdownloader)
+  * Command-line interface only.
 * Wyvern: [`https://github.com/nicohman/wyvern`](https://github.com/nicohman/wyvern)
   * Command-line interface only, and seemingly no longer under development.
 
