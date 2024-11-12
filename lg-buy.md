@@ -33,3 +33,15 @@ Humble Bundle is known largely for selling bundles of Steam keys, but the site a
 
 * Linux games: [`https://www.humblebundle.com/store/search?platform=linux&drm=download`](https://www.humblebundle.com/store/search?platform=linux&drm=download)
 * Linux games on sale: [`https://www.humblebundle.com/store/search?filter=onsale&platform=linux&drm=download`](https://www.humblebundle.com/store/search?filter=onsale&platform=linux&drm=download)
+
+## ZOOM Platform
+ZOOM Platform is a lesser known store with a modest selection of mostly old games. Like GOG's games, these are DRM-free, and some of them are available for Linux. (Many of those are just packaged with the Linux versions of DOSBox and ScummVM, but it's still nice to see.)
+
+* Linux games: [`https://www.zoom-platform.com/search/any/any/any/any/any/linux/any/any`](https://www.zoom-platform.com/search/any/any/any/any/any/linux/any/any)
+* Linux games on sale: [`https://www.zoom-platform.com/sale/any/any/any/any/any/linux/any/any`](https://www.zoom-platform.com/sale/any/any/any/any/any/linux/any/any)
+
+## Game Jolt
+Game Jolt is another relatively obscure site, with plenty of free games as well as some commercial releases.
+
+* Linux games: [`https://gamejolt.com/games?os=linux`](https://gamejolt.com/games?os=linux)
+* Linux games on sale: [`https://gamejolt.com/games?price=sale&os=linux`](https://gamejolt.com/games?price=sale&os=linux)
