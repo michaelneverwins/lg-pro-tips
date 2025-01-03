@@ -46,6 +46,14 @@ Categories=Game;
   * In this case, the shortcut runs `wine` with the argument `Darkula.exe`.
   * I can simply reference `wine` by name without specifying its full location, `/usr/bin/wine`, because `/usr/bin` is included in my `$PATH` environment variable.
   * The argument to `wine` is simply `Darkula.exe`, rather than the absolute path `/home/michael/.local/share/games/Darkula/Darkula.exe`, because `wine` accepts relative paths for executables and the working directory is `/home/michael/.local/share/games/Darkula`.
+  * If you want the shortcut to set an environment variable (e.g. to change `WINEPREFIX`), you should do it using the `env` command. Whereas at the command line I could get away with simply entering
+    ```bash
+    WINEPREFIX=~/.local/share/games/Darkula/.wine wine Darkula.exe
+    ```
+    to give the game its own prefix, my desktop entry would instead need to use `env` as follows:
+    ```
+    Exec=env WINEPREFIX=/home/michael/.local/share/games/Darkula/.wine wine Darkula.exe
+    ```
 * The `Icon` field defines an icon image.
   * In this case, it's the location of an icon file which I extracted from the executable. (See the next section.)
 
