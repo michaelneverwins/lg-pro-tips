@@ -1,1 +1,1 @@
-# lg-pro-tips
+# Linux Gaming Pro Tips
