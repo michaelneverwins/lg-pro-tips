@@ -17,6 +17,8 @@ System-wide menu shortcuts, usually created automatically for applications insta
 #### User applications
 User-specific menu shortcuts are defined by desktop entries typically located in `~/.local/share/applications`. This directory is owned by you, so you can modify the files therein as you like. If a desktop entry in this user directory has the same file name as a desktop entry in the `root`-owned system directory, the one in the user directory takes precedence. Therefore, if you want to change the icon image or other details of a menu shortcut defined in `/usr/share/applications` without `root` access, you can make a copy of it in your `~/.local/share/applications` and modify the copy.
 
+The commands `desktop-file-install` and `desktop-file-edit` can be used to install and edit desktop entries, respectively, and the former also has options for editing so that a desktop entry from `/usr/share/applications` can be edited and installed to `~/.local/share/applications` in one step, given the proper arguments. However, these commands are probably best used for scripted and bulk editing, while your favorite text editor is probably the easiest tool for one-off edits.
+
 #### Other
 Desktop entries may also be found in other locations, such as `/var/lib/flatpak/exports/share/applications` for Flatpak programs and `/var/lib/snapd/desktop/applications` for applications installed via Snap.
 
@@ -58,6 +60,12 @@ Categories=Game;
   * In this case, it's the location of an icon file which I extracted from the executable. (See the next section.)
 
 For the full specification of the file format, see [`https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html`](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html).
+
+The `desktop-file-validate` command can be used to verify that your desktop entry is formatted correctly:
+```bash
+desktop-file-validate ~/.local/share/applications/Darkula.desktop
+```
+If there's no output, then the file is valid.
 
 ## Icons
 If you're creating your own desktop entry, you'll probably want an icon. The `Icon` field may reference an icon by name — for example, the desktop entry for Steam simply has `Icon=steam` — but you can also put an absolute file path here, which is useful if you're creating a shortcut for something you've installed manually.
