@@ -11,9 +11,7 @@ The best first step is often to see if anyone else has already reported whatever
 * It should go without saying that various forums (on Steam, GOG, etc.) can also be a useful resource.
 * PC Gaming Wiki ([`https://www.pcgamingwiki.com/`](https://www.pcgamingwiki.com/)) might also be worth checking, but it documents relatively few fixes for Linux, unfortunately.
 
-If none of the documented issues match your own, you might find yourself in a position to write your own compatibility report, create your own forum thread to ask for help, or even submit your own bug report to some project if you know where to send it. This can be frustrating, as you might not get an answer right away
-, but it may help you and others in the long run — that is, if you've provided m
-ore information than simply "doesn't work".
+If none of the documented issues match your own, you might find yourself in a position to write your own compatibility report, create your own forum thread to ask for help, or even submit your own bug report to some project if you know where to send it. This can be frustrating, as you might not get an answer right away, but it may help you and others in the long run — that is, if you've provided more information than simply "doesn't work".
 
 ## Getting Logging
 Sometimes, you try to run a game and it just doesn't run. This, unfortunately, often leads to the kind of bug report or cry for help that nobody wants to read:
