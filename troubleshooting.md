@@ -1,9 +1,26 @@
 # Basic Troubleshooting
 
+## Checking for Known Issues
+The best first step is often to see if anyone else has already reported whatever issue you're having — and, with any luck, a workaround or a fix for it.
+* If you're trying to run a Steam game, especially a Steam game for Windows, you might want to check the compatibility reports on ProtonDB ([`https://www.protondb.com/`](https://www.protondb.com/)).
+  * The primary purpose of ProtonDB is reporting compatibility, but fixes are often documented there as well.
+  * This site might be helpful even if you're running a non-Steam copy of a game found on Steam, although some workarounds might be Proton-specific (i.e. might not work with Wine in general).
+  * You might find compatibility reports and fixes for native Linux games, but the site's original purpose was Proton compatibility reporting. In light of this and given Proton's ease of use, a ProtonDB user's first suggestion for a troublesome Linux port might just be to use the Windows version instead.
+* Issues and workarounds specifically pertaining to Steam games for Windows may also be found in the Proton issue tracker ([`https://github.com/ValveSoftware/Proton/issues`](https://github.com/ValveSoftware/Proton/issues)).
+* If you're trying to run a non-Steam game for Windows, you can try the Wine Application Database ([`https://appdb.winehq.org/`](https://appdb.winehq.org/)).
+* It should go without saying that various forums (on Steam, GOG, etc.) can also be a useful resource.
+* PC Gaming Wiki ([`https://www.pcgamingwiki.com/`](https://www.pcgamingwiki.com/)) might also be worth checking, but it documents relatively few fixes for Linux, unfortunately.
+
+If none of the documented issues match your own, you might find yourself in a position to write your own compatibility report, create your own forum thread to ask for help, or even submit your own bug report to some project if you know where to send it. This can be frustrating, as you might not get an answer right away
+, but it may help you and others in the long run — that is, if you've provided m
+ore information than simply "doesn't work".
+
 ## Getting Logging
+Sometimes, you try to run a game and it just doesn't run. This, unfortunately, often leads to the kind of bug report or cry for help that nobody wants to read:
+
 >I tried running it... and nothing happened!
 
-Wrong. Something happened, and your first order of business is to find out what it was. This usually means getting some kind of logging or output from whatever you were trying to run.
+While this might be an accurate description of what you saw on the screen, it's not helpful to anyone. Something happened, and your first order of business is to find out what it was. This usually means getting some kind of logging or output from whatever you were trying to run.
 
 The primary purpose of this short guide is not to tell you how to interpret whatever errors come out. Some common errors are discussed after this section on gathering logs, but outside of a few easy-to-fix cases, it's likely that you'll be taking this logging to someone else who can help you figure out what it means. But you'll still need to get the logging because it's almost guaranteed that nobody can help you with "and nothing happened". If you don't come with logging, they'll ask for it.
 
