@@ -5,7 +5,7 @@
 
 Wrong. Something happened, and your first order of business is to find out what it was. This usually means getting some kind of logging or output from whatever you were trying to run.
 
-The purpose of this short guide is not to tell you how to interpret whatever errors come out. More likely you'll be taking this logging to someone else who can help you figure out what it means. But you'll still need to get the logging because it's almost guaranteed that nobody can help you with "and nothing happened". If you don't come with logging, they'll ask for it.
+The primary purpose of this short guide is not to tell you how to interpret whatever errors come out. Some common errors are discussed after this section on gathering logs, but outside of a few easy-to-fix cases, it's likely that you'll be taking this logging to someone else who can help you figure out what it means. But you'll still need to get the logging because it's almost guaranteed that nobody can help you with "and nothing happened". If you don't come with logging, they'll ask for it.
 
 ### From the Command Line
 This section pertains primarily to native Linux games.
@@ -68,3 +68,23 @@ Bottles, as a graphical front-end for Wine, obfuscates what's going on in the ou
 Given that Bottles uses Wine, the `WINEDEBUG` environment variable (described above) can be used. Bottles also has a launch options field which functions approximately like that of Steam (also described above), so you can enable all warnings from Wine by putting `WINEDEBUG=warn+all %command%` in the launch options. However, if you want to try output redirection with Bottles launch options, be aware that the Bottles Flatpak will generally not be allowed to write to your home directory (as in previous output redirection examples) by default.
 
 Of course, you can also run Bottles itself from the command line (as `flatpak run com.usebottles.bottles`), and any errors encountered in running games should show up there.
+
+## Common Errors
+
+### Permission Denied
+If you get a permission error, then you probably need to add execute permission to the game's main executable. (If you're double-clicking a binary with no execute permission then your file manager is probably telling you that it doesn't know how to open the file, but if you're double-clicking a shell script that runs a binary which is erroneously lacking execute permission then you might see nothing happen.)
+
+You should be able to see if a file has execute permission, and make it so if not, by right-clicking the file and opening its properties. Otherwise, you can open a terminal and use `chmod`, e.g. `chmod +x gameExecutable`.
+
+The game could also be lacking permission to write to some directory, so the file name that comes with the "permission denied" error is important.
+
+### Cannot Open Shared Object File
+If you get an error of the form
+```
+gameExecutable: error while loading shared libraries: libSomething.so.x.y.z: cannot open shared object file: No such file or directory
+```
+then the game is failing to find some library.
+
+Sometimes this can happen because you're not running the game from the correct directory, or because a certain environment variables like `LD_LIBRARY_PATH` or `LD_PRELOAD` isn't set properly. If a game for Linux comes with a shell script (e.g. a `start.sh`), then it should resolve any such issues (boldly assuming no bugs), and you should generally run that script instead of running a binary executable directly. 
+
+Other times, a game will depend on some shared library which is neither included with the game nor installed on your system. In some cases, you can use your package manager to install the library it's missing. However, game may also require some dependency which you can't get from your distribution's package repository, because the specific version of that library the game needs is too old. This happens often with older games built with the GameMaker Studio engine, which typically require `libcrypto.so.1.0.0` and `libssl.so.1.0.0`, for example. If you can download copies of these shared object files and then set the environment variable `LD_LIBRARY_PATH` to the location where you saved them, it might get such a game working. However, the easier solution might be to run the game through Steam, where it will benefit from Steam Linux Runtime which provides many libraries commonly required by native Linux games.
