@@ -1,0 +1,70 @@
+# Basic Troubleshooting
+
+## Getting Logging
+>I tried running it... and nothing happened!
+
+Wrong. Something happened, and your first order of business is to find out what it was. This usually means getting some kind of logging or output from whatever you were trying to run.
+
+The purpose of this short guide is not to tell you how to interpret whatever errors come out. More likely you'll be taking this logging to someone else who can help you figure out what it means. But you'll still need to get the logging because it's almost guaranteed that nobody can help you with "and nothing happened". If you don't come with logging, they'll ask for it.
+
+### From the Command Line
+This section pertains primarily to native Linux games.
+
+If you've installed a game, and double-clicking on the executable or running it from the menu/desktop shortcut doesn't seem to do anything, try running the game from the command line. While it may appear that a game has failed silently because it didn't generate any pop-up dialogs, it probably did output some kind of error, and the terminal will allow you to see it.
+
+#### With an Executable
+If what you already tried was simply double-clicking directly on the game's executable binary or runner script in your file manager, then just enter that same file path into a terminal.
+
+Depending on your system configuration, you may be able to click and drag the executable from your file manager into a terminal window in order to paste the file path.
+
+You may also be able to right-click the file manager and select "Open in Terminal" (or similar) to open the game's directory in your terminal, at which point you could run the main executable or script by entering the relative path starting with `./` (where `.` is a reference to the terminal's current working directory). In other words, if you've already opened the directory containing a `start.sh` in your terminal, you can enter `./start.sh` to run it.
+
+Only if the game's directory is included in your `$PATH` value can you get away with just typing the executable name by itself with no slashes.
+
+#### With a Shortcut
+You might also have a menu shortcut or desktop shortcut, which will come in handy in a few circumstances: if you don't actually know where the game is installed, if you found where it's installed but don't know which executable to run, or if the shortcut actually runs the executable with some specific arguments that you need.
+
+Depending on your system, you might be able to see what command a shortcut is running by right-clicking it and selecting "Properties" (or similar). If you can find the `.desktop` file defining the shortcut, you can also just open up the file in a text editor. Menu and desktop shortcuts on Linux are [desktop entry](desktop-entries.md) files. The string after `Exec=` is the command that the shortcut runs, and the path specified by `Path=` (if it exists) is the directory from which the command should be executed.
+
+Depending on your distribution, you can probably run the shortcut using the `gtk-launch` command, with the desktop entry file name (with or without the `.desktop` extension) as an argument. (This will start the game or program as a background process but you should still see some output.)
+
+Otherwise, you can just use `cd` to go to the location specified by the `Path=` line (which you should put in quotes if it has spaces or other weird characters), and then enter what comes after `Exec=` (without adding any quotes). If the `Exec=` line contains `%F`, `%f`, `%U`, or `%u`, then you can just omit that for now; these special strings represent files or URIs passed as arguments to the executable. Just clicking the shortcut generally shouldn't result in any arguments being passed, and thus you shouldn't need to worry about this if what you're trying to reproduce at the command line is the simple "click the shortcut" behavior.
+
+#### Writing to a File
+In general, running the game from a terminal will reveal whatever gets logged to the `stdout` and `stderr` streams. If you want to capture this output to a file, say `~/output.txt`, you can append `> ~/output.txt 2>&1` to whatever command you're running. If you really care to separate the `stdout` and `stderr` streams (typically containing normal output and errors respectively), you can append something like `> ~/stdout.txt 2> ~/stderr.txt` instead. If you need to see the output in real time as well as saving it to a file, you can use `tee`; capturing both streams to the same `~/output.txt` can be done by appending `2>&1 | tee ~/output.txt` to your command.
+
+Do note that redirecting output to a file as shown above will erase the contents of that output file if it already exists, and will do so without asking for confirmation. If you want to append to files instead of overwriting them, you can use `>> ~/output.txt 2>&1` or `>> ~/stdout.txt 2>> ~/stderr.txt` or `2>&1 | tee -a ~/output.txt`, but combining the output from multiple runs will likely just cause confusion. It's probably best to change the output filename if you don't want to overwrite an existing file.
+
+### From Wine
+If you're running `wine` without the help of a graphical front-end (e.g. Steam, Bottles, or Lutris), then you're probably already using the command line and thus have already seen the kind of output that you could get from the advice given in the previous section.
+
+The thing about Wine is that it generates more logging than you'll see at the terminal by default. The environment variable `WINEDEBUG` can be used to enable additional debug output, which might be useful to include in bug reports or other requests for help. For example, `WINEDEBUG=warn+all` will enable all warnings. Like all environment variables, this would be put before your `wine` command, e.g.
+```bash
+WINEDEBUG=warn+all wine game.exe
+```
+The output may be quite large, so redirecting the output to a file (as explained above) is advisable.
+
+For more information on `WINEDEBUG` (though it's probably more in-depth than you'll like if you're reading this page), see: [`https://gitlab.winehq.org/wine/wine/-/wikis/Debug-Channels`](https://gitlab.winehq.org/wine/wine/-/wikis/Debug-Channels)
+
+### From Steam
+Running a game's executable directly from the command line isn't very helpful if what you actually want to troubleshoot is running the game from Steam, which will generally use a runtime environment which differs from what you have at the command line.
+
+You can get some output from games executed through Steam if you launched Steam itself from the command line, but this can be a hassle if you've already got Steam running, because you'll have to shut it down first. Fortunately, we can do what we need through the launch options interface. This can be accessed by right-clicking a game in your library and selecting "Properties..."; you'll find the launch options field in the "General" tab of the window that opens.
+
+#### Native Games
+For native Linux games, we can redirect output to a file in the same way as described above — e.g. by appending `> ~/output.txt 2>&1` to your launch options. If your launch options field is empty, then you can just paste that text as-is, or with a different filename if you don't want to clobber an existing `~/output.txt`. If you already have something else in the launch options field, then output redirection will generally go at the very end.
+
+#### With Proton
+To get extra logging from Proton, add the environment variable `PROTON_LOG=1` to your launch options. This should go before `%command%`, so:
+* if your launch options field is empty, then just set it to `PROTON_LOG=1 %command%`;
+* if you already have launch options but there's no `%command%`, then put `PROTON_LOG=1 %command%` at the beginning;
+* if your launch options already contain `%command%`, then putting `PROTON_LOG=1` at the beginning is most likely correct.
+
+This `PROTON_LOG=1` environment variable will tell Proton to write a log file which, by default, will be found in your home directory with a name of the form `steam-*.log`. For more information, see: [`https://github.com/ValveSoftware/Proton?tab=readme-ov-file#runtime-config-options`](https://github.com/ValveSoftware/Proton?tab=readme-ov-file#runtime-config-options)
+
+### From Bottles
+Bottles, as a graphical front-end for Wine, obfuscates what's going on in the output streams by default. You can, however, make it display a terminal. Before using your bottle's '"Run Executable" button, click the gear button next to it and check the "Run in Terminal" box. Alternatively, if your game already has a shortcut in the bottle's "Programs" list, click the menu button to the right of the shortcut's play button, and then click the button with the terminal icon.
+
+Given that Bottles uses Wine, the `WINEDEBUG` environment variable (described above) can be used. Bottles also has a launch options field which functions approximately like that of Steam (also described above), so you can enable all warnings from Wine by putting `WINEDEBUG=warn+all %command%` in the launch options. However, if you want to try output redirection with Bottles launch options, be aware that the Bottles Flatpak will generally not be allowed to write to your home directory (as in previous output redirection examples) by default.
+
+Of course, you can also run Bottles itself from the command line (as `flatpak run com.usebottles.bottles`), and any errors encountered in running games should show up there.

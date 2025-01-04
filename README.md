@@ -2,3 +2,4 @@
 
 * [Where to Buy Games for Linux](buy.md)
 * [Desktop Entries](desktop-entries.md)
+* [Basic Troubleshooting](troubleshooting.md)
