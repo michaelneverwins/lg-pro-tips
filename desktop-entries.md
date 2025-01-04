@@ -3,18 +3,18 @@ Desktop shortcuts and menu shortcuts in Linux are defined by files called deskto
 
 ## Locations
 
-### Desktop shortcuts
+### Desktop Shortcuts
 Desktop shortcuts are typically defined by desktop entry files located in your `~/Desktop` directory. For these to work, you may need to make them executable (although this step will probably be done already for any desktop shortcuts not created manually by you):
 ```bash
 chmod u+x ~/Desktop/*.desktop
 ```
 
-### Menu shortcuts
+### Menu Shortcuts
 
-#### System applications
+#### System Applications
 System-wide menu shortcuts, usually created automatically for applications installed by your package manager, are defined by desktop entries typically located in `/usr/share/applications` and/or `/usr/local/share/applications`. These directories are owned by `root`, but you can modify the associated menu shortcuts without special permissions by overriding the system-wide desktop entries with user-specific desktop entries (see below).
 
-#### User applications
+#### User Applications
 User-specific menu shortcuts are defined by desktop entries typically located in `~/.local/share/applications`. This directory is owned by you, so you can modify the files therein as you like. If a desktop entry in this user directory has the same file name as a desktop entry in the `root`-owned system directory, the one in the user directory takes precedence. Therefore, if you want to change the icon image or other details of a menu shortcut defined in `/usr/share/applications` without `root` access, you can make a copy of it in your `~/.local/share/applications` and modify the copy.
 
 The commands `desktop-file-install` and `desktop-file-edit` can be used to install and edit desktop entries, respectively, and the former also has options for editing so that a desktop entry from `/usr/share/applications` can be edited and installed to `~/.local/share/applications` in one step, given the proper arguments. However, these commands are probably best used for scripted and bulk editing, while your favorite text editor is probably the easiest tool for one-off edits.
