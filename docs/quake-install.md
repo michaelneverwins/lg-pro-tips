@@ -15,6 +15,7 @@ But wait... isn't the soundtrack included in GOG's installer? Well, yes. It's no
 The steps below will result in approximately the same set-up that `game-data-packager` would do for you, with the following differences:
 * Soundtracks are extracted from the GOG installer instead of downloaded.
 * Game assets are placed in user-owned folders rather than installed as system packages.
+* Creation of [desktop entries](desktop-entries.md) is not included (nor is any other fancy stuff that `game-data-packager` might be doing under the hood beyond gathering the non-free files needed by Quakespasm).
 
 ## Unpacking the installer (required files only)
 We will use `innoextract` for this.
