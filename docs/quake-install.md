@@ -33,7 +33,7 @@ innoextract ~/Downloads/setup_quake_the_offering_2.0.0.6.exe \
     -I app/Id1/PAK0.PAK -I app/Id1/PAK1.PAK -I app/game.gog -I app/game.cue \
     -I app/hipnotic/pak0.pak -I app/gamea.gog -I app/gamea.cue \
     -I app/rogue/pak0.pak -I app/gamed.gog -I app/gamed.cue \
-    -d /tmp/quake-unpack/
+    -d /tmp/quake-unpack/ -L
 ```
 Note: If the `.exe` filename referenced above does not match the one you have, the steps in this guide may not work. GOG still distributes the `.exe` referenced above at the time of writing, but this might change in the future. (This is the original _Quake_, by the way, not _Quake Enhanced_.)
 
@@ -42,8 +42,7 @@ We might as well do the easy part first.
 ```sh
 # Quake
 mkdir -p ~/.quakespasm/id1
-mv /tmp/quake-unpack/app/Id1/PAK0.PAK ~/.quakespasm/id1/pak0.pak
-mv /tmp/quake-unpack/app/Id1/PAK1.PAK ~/.quakespasm/id1/pak1.pak
+mv /tmp/quake-unpack/app/id1/pak*.pak ~/.quakespasm/id1/
 # Mission Pack 1: Scourge of Armagon
 mkdir -p ~/.quakespasm/hipnotic
 mv /tmp/quake-unpack/app/hipnotic/pak0.pak ~/.quakespasm/hipnotic/
