@@ -71,7 +71,7 @@ bchunk -w /tmp/quake-unpack/app/gamed.gog /tmp/quake-unpack/app/gamed.cue /tmp/q
 QuakeSpasm can actually play the resulting `.wav` files, so we _could_ just install them to our QuakeSpasm folder now and be done with it. However, recall that the soundtracks that `game-data-packager` would download are in `.ogg` format, so there's one more step if we want our manually installed assets to match what `game-data-packager` would fetch for us. (What difference does it make? Well, `.ogg` files are significantly smaller. So if we make `.ogg` files and ditch these `.wav` files, then we will be saving some space.)
 
 ### Option 1: keep `.wav` format
-The `.wav` files just need to be placed in `music` folders next to where we put the `.pak` files:
+If we want to use the `.wav` files, they just need to be placed in `music` folders next to where we put the `.pak` files:
 ```sh
 # Quake
 mkdir -p ~/.quakespasm/id1/music
@@ -84,7 +84,7 @@ mkdir -p ~/.quakespasm/rogue/music
 mv /tmp/quake-unpack/rogue-chunks/track*.wav ~/.quakespasm/rogue/music/
 ```
 ### Option 2: convert to `.ogg` format
-The `oggenc` program (which is provided by the `vorbis-tools` package on Linux Mint) can be used to convert our `.wav` files to `.ogg` files, which are to be placed in `music` folders next to where we put the `.pak` files:
+Alternatively (perhaps preferably), the `oggenc` program (which is provided by the `vorbis-tools` package on Linux Mint) can be used to convert our `.wav` files to smaller `.ogg` files, which are to be placed in `music` folders next to where we put the `.pak` files:
 ```sh
 sudo apt install vorbis-tools
 # Quake
