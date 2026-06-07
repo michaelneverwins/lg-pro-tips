@@ -74,8 +74,10 @@ Now we can just install the `.ogg` files:
 ```sh
 mkdir -p ~/.quakespasm/id1/music
 mv /tmp/quake-unpack/id1-chunks/track*.ogg ~/.quakespasm/id1/music/
+# Mission Pack 1: Scourge of Armagon
 mkdir -p ~/.quakespasm/hipnotic/music
 mv /tmp/quake-unpack/hipnotic-chunks/track*.ogg ~/.quakespasm/hipnotic/music/
+# Mission Pack 2: Dissolution of Eternity
 mkdir -p ~/.quakespasm/rogue/music
 mv /tmp/quake-unpack/rogue-chunks/track*.ogg ~/.quakespasm/rogue/music/
 ```
