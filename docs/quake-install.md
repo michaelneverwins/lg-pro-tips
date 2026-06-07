@@ -8,9 +8,13 @@ game-data-packager --install quake \
     --package quake-dissolution --package quake-dissolution-music \
     -- ~/Downloads/setup_quake_the_offering_2.0.0.6.exe
 ```
-This program is actually pretty neat; it will create `.deb` packages for the game assets and install them to your system in locations used by the Quakespasm source port, which is then marked as a dependency and also installed automatically. At the time of writing, it will even download the _Quake_ and mission pack soundtracks in Ogg Vorbis format so that Quakespasm can play the music.
+This program is actually pretty neat; it will create `.deb` packages for the game assets and install them to your system in locations used by the Quakespasm source port, which is then marked as a dependency and also installed automatically. At the time of writing, it will even download the soundtracks in Ogg Vorbis format so that Quakespasm can play the music.
 
-But wait... isn't the soundtrack included in GOG's installer? Well, yes. It's not in Ogg Vorbis format, but we can convert it to that format ourselves, which is what this guide will demonstrate. Note that simply downloading the soundtrack is the easy solution — and is probably reliable enough, assuming the site from which `game-data-packager` downloads it is allowed to host it. However, what if that site _isn't_ reliable and goes down? Or what if we're afraid the police will knock on our door if we download copyrighted music? Or what if we just don't want to rely on `game-data-packager` to compile the required assets because we don't want them installed as system packages owned by `root`? Or what if we're using a distribution which doesn't have `game-data-packager` (but does happen to have all of the other programs to be used in the steps below)? Then we can do this:
+But wait... isn't the soundtrack included in GOG's installer? Well, yes. It's not in Ogg Vorbis format, but we can convert it to that format ourselves, which is what this guide will demonstrate. Note that simply downloading the soundtrack is the easy solution — and is probably reliable enough, assuming the site from which `game-data-packager` downloads it is allowed to host it. However, what if that site _isn't_ reliable and goes down? Or what if we're afraid the police will knock on our door if we download copyrighted music? More generally, what if we just don't want to rely on `game-data-packager` to compile the required assets in the first place, because we don't want them installed as system packages owned by `root`? Or what if we're using a distribution which doesn't have `game-data-packager` (but does happen to have all of the other programs to be used in the steps below)?
+
+The steps below will result in approximately the same set-up that `game-data-packager` would do for you, with the following differences:
+* Soundtracks are extracted from the GOG installer instead of downloaded.
+* Game assets are placed in user-owned folders rather than installed as system packages.
 
 ## Unpacking the installer (required files only)
 We will use `innoextract` for this.
