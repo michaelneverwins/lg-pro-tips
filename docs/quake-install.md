@@ -42,8 +42,10 @@ We might as well do the easy part first.
 mkdir -p ~/.quakespasm/id1
 mv /tmp/quake-unpack/app/Id1/PAK0.PAK ~/.quakespasm/id1/pak0.pak
 mv /tmp/quake-unpack/app/Id1/PAK1.PAK ~/.quakespasm/id1/pak1.pak
+# Mission Pack 1: Scourge of Armagon
 mkdir -p ~/.quakespasm/hipnotic
 mv /tmp/quake-unpack/app/hipnotic/pak0.pak ~/.quakespasm/hipnotic/
+# Mission Pack 2: Dissolution of Eternity
 mkdir -p ~/.quakespasm/rogue
 mv /tmp/quake-unpack/app/rogue/pak0.pak ~/.quakespasm/rogue/
 ```
@@ -58,17 +60,33 @@ Use `bchunk` to split the `.gog` files into `.iso` and `.wav` files, and then us
 mkdir -p ~/.quakespasm/id1/music
 bchunk -w /tmp/quake-unpack/app/game.gog /tmp/quake-unpack/app/game.cue ~/.quakespasm/id1/music/track
 oggenc ~/.quakespasm/id1/music/track*.wav
-rm ~/.quakespasm/id1/music/track*.wav ~/.quakespasm/id1/music/track01.iso
+# Mission Pack 1: Scourge of Armagon
 mkdir -p ~/.quakespasm/hipnotic/music
 bchunk -w /tmp/quake-unpack/app/gamea.gog /tmp/quake-unpack/app/gamea.cue ~/.quakespasm/hipnotic/music/track
 oggenc ~/.quakespasm/hipnotic/music/track*.wav
-rm ~/.quakespasm/hipnotic/music/track*.wav ~/.quakespasm/hipnotic/music/track01.iso
+# Mission Pack 2: Dissolution of Eternity
 mkdir -p ~/.quakespasm/rogue/music
 bchunk -w /tmp/quake-unpack/app/gamed.gog /tmp/quake-unpack/app/gamed.cue ~/.quakespasm/rogue/music/track
 oggenc ~/.quakespasm/rogue/music/track*.wav
-rm ~/.quakespasm/rogue/music/track*.wav ~/.quakespasm/rogue/music/track01.iso
 ```
-(We don't need to keep the `.wav` files once we have our `.ogg` files. We don't need to keep the `.iso` files either, so they are also deleted by the commands above, but you can mount them if you want to see what was on the original CDs.)
+
+## Clean-up
+We don't need to keep the `.wav` files once we have our `.ogg` files.
+```sh
+rm ~/.quakespasm/id1/music/track*.wav
+rm ~/.quakespasm/hipnotic/music/track*.wav
+rm ~/.quakespasm/rogue/music/track*.wav
+```
+We don't need to keep the `.iso` files either (but you can mount them first if you want to see what was on the original CDs).
+```sh
+rm ~/.quakespasm/id1/music/track01.iso
+rm ~/.quakespasm/hipnotic/music/track01.iso
+rm ~/.quakespasm/rogue/music/track01.iso
+```
+We can also delete whatever is left of the folder where we unpacked the installer (but if you placed it in `/tmp`, like I did, then your system will probably delete it on reboot anyway).
+```sh
+rm -r /tmp/quake-unpack
+```
 
 ## Running the game and its mission packs
 To install Quakespasm:
