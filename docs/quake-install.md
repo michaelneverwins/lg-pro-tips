@@ -34,6 +34,7 @@ innoextract ~/Downloads/setup_quake_the_offering_2.0.0.6.exe \
     -I app/rogue/pak0.pak -I app/gamed.gog -I app/gamed.cue \
     -d /tmp/quake-unpack/
 ```
+Note: If the `.exe` filename above does not match the one you have, the steps below may not work. GOG still distributes the `.exe` referenced above at the time of writing, but this might change in the future. (This is the original _Quake_, by the way, not _Quake Enhanced_.)
 
 ## Installing the `.pak` files
 We might as well do the easy part first.
