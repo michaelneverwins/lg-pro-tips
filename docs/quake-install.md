@@ -40,6 +40,7 @@ Note: If the `.exe` filename referenced above does not match the one you have, t
 ## Installing the `.pak` files
 We might as well do the easy part first.
 ```sh
+# Quake
 mkdir -p ~/.quakespasm/id1
 mv /tmp/quake-unpack/app/Id1/PAK0.PAK ~/.quakespasm/id1/pak0.pak
 mv /tmp/quake-unpack/app/Id1/PAK1.PAK ~/.quakespasm/id1/pak1.pak
@@ -51,39 +52,57 @@ mkdir -p ~/.quakespasm/rogue
 mv /tmp/quake-unpack/app/rogue/pak0.pak ~/.quakespasm/rogue/
 ```
 
-## Creating and installing the `.ogg` files
-Now here's the fun part. It will require some additional programs, `bchunk` and `oggenc`. The latter is provided by the `vorbis-tools` package on Linux Mint.
+## Creating and installing the music files
+Now here's the "fun" part: The music files have to be extracted from disc images that we got from the installer.
+
+We can use `bchunk` with the `.cue` files to split the `.gog` files into `.iso` and `.wav` files:
 ```sh
-sudo apt install bchunk vorbis-tools
-```
-Use `bchunk` to split the `.gog` files into `.iso` and `.wav` files, and then use `oggenc` to convert the resulting `.wav` files to `.ogg` files:
-```sh
+sudo apt install bchunk
+# Quake
 mkdir -p /tmp/quake-unpack/id1-chunks
 bchunk -w /tmp/quake-unpack/app/game.gog /tmp/quake-unpack/app/game.cue /tmp/quake-unpack/id1-chunks/track
-oggenc /tmp/quake-unpack/id1-chunks/track*.wav
 # Mission Pack 1: Scourge of Armagon
 mkdir -p /tmp/quake-unpack/hipnotic-chunks
 bchunk -w /tmp/quake-unpack/app/gamea.gog /tmp/quake-unpack/app/gamea.cue /tmp/quake-unpack/hipnotic-chunks/track
-oggenc /tmp/quake-unpack/hipnotic-chunks/track*.wav
 # Mission Pack 2: Dissolution of Eternity
 mkdir -p /tmp/quake-unpack/rogue-chunks
 bchunk -w /tmp/quake-unpack/app/gamed.gog /tmp/quake-unpack/app/gamed.cue /tmp/quake-unpack/rogue-chunks/track
-oggenc /tmp/quake-unpack/rogue-chunks/track*.wav
 ```
-Now we can just install the `.ogg` files:
+QuakeSpasm can actually play the resulting `.wav` files, so we _could_ just install them to our QuakeSpasm folder now and be done with it. However, recall that the soundtracks that `game-data-packager` would download are in `.ogg` format, so there's one more step if we want our manually installed assets to match what `game-data-packager` would fetch for us. (What difference does it make? Well, `.ogg` files are significantly smaller. So if we make `.ogg` files and ditch these `.wav` files, then we will be saving some space.)
+
+### Option 1: keep `.wav` format
+The `.wav` files just need to be placed in `music` folders next to where we put the `.pak` files:
 ```sh
+# Quake
+mkdir -p ~/.quakespasm/id1/music
+mv /tmp/quake-unpack/id1-chunks/track*.wav ~/.quakespasm/id1/music/
+# Mission Pack 1: Scourge of Armagon
+mkdir -p ~/.quakespasm/hipnotic/music
+mv /tmp/quake-unpack/hipnotic-chunks/track*.wav ~/.quakespasm/hipnotic/music/
+# Mission Pack 2: Dissolution of Eternity
+mkdir -p ~/.quakespasm/rogue/music
+mv /tmp/quake-unpack/rogue-chunks/track*.wav ~/.quakespasm/rogue/music/
+```
+### Option 2: convert to `.ogg` format
+The `oggenc` program (which is provided by the `vorbis-tools` package on Linux Mint) can be used to convert our `.wav` files to `.ogg` files, which are to be placed in `music` folders next to where we put the `.pak` files:
+```sh
+sudo apt install vorbis-tools
+# Quake
+oggenc /tmp/quake-unpack/id1-chunks/track*.wav
 mkdir -p ~/.quakespasm/id1/music
 mv /tmp/quake-unpack/id1-chunks/track*.ogg ~/.quakespasm/id1/music/
 # Mission Pack 1: Scourge of Armagon
+oggenc /tmp/quake-unpack/hipnotic-chunks/track*.wav
 mkdir -p ~/.quakespasm/hipnotic/music
 mv /tmp/quake-unpack/hipnotic-chunks/track*.ogg ~/.quakespasm/hipnotic/music/
 # Mission Pack 2: Dissolution of Eternity
+oggenc /tmp/quake-unpack/rogue-chunks/track*.wav
 mkdir -p ~/.quakespasm/rogue/music
 mv /tmp/quake-unpack/rogue-chunks/track*.ogg ~/.quakespasm/rogue/music/
 ```
 
 ## Clean-up
-Once we have our `.ogg` files, we don't need to keep the `.wav` files (created at `/tmp/quake-unpack/*-chunks/track*.wav` by the commands above). We also don't need to keep the `.iso` files (likewise created at `/tmp/quake-unpack/*-chunks/track01.iso`), but you can mount them if you want to see what was on the original CDs. Finally, we don't need the `.gog` and `.cue` files that were extracted from the installer (`/tmp/quake-unpack/app/*.{gog,cue}`). Following the instructions above, all of this should have ended up in `/tmp/quake-unpack` which we can now delete (although anything under `/tmp` will typically be cleared on reboot anyway):
+If we made `.ogg` files, we don't need to keep the `.wav` files (created at `/tmp/quake-unpack/*-chunks/track*.wav` by the commands above). We also don't need to keep the `.iso` files (likewise created at `/tmp/quake-unpack/*-chunks/track01.iso`), but you can mount them if you want to see what was on the original CDs. Finally, we don't need the `.gog` and `.cue` files that were extracted from the installer (`/tmp/quake-unpack/app/*.{gog,cue}`). Following the instructions above, all of this should have ended up in `/tmp/quake-unpack` which we can now delete (although anything under `/tmp` will typically be cleared on reboot anyway):
 ```sh
 rm -r /tmp/quake-unpack
 ```
