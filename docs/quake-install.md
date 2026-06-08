@@ -1,4 +1,4 @@
-# Setting Up Quake (with Music) from GOG Installer
+# Setting Up _Quake_ (with Music) from GOG Installer
 On a Debian-based distribution such as Linux Mint, one can easily install _Quake_ and its mission packs from GOG's installer using the `game-data-packager` program as follows:
 ```sh
 sudo apt install game-data-packager
@@ -35,6 +35,8 @@ innoextract ~/Downloads/setup_quake_the_offering_2.0.0.6.exe \
     -I app/rogue/pak0.pak -I app/gamed.gog -I app/gamed.cue \
     -d /tmp/quake-unpack/ -L
 ```
+The `-L` option used here makes all output filenames lowercase, so that `app/Id1/PAK*.PAK` become `app/id1/pak*.pak` to match the capitalization QuakeSpasm expects.
+
 Note: If the `.exe` filename referenced above does not match the one you have, the steps in this guide may not work. GOG still distributes the `.exe` referenced above at the time of writing, but this might change in the future. (This is the original _Quake_, by the way, not _Quake Enhanced_.)
 
 ## Installing the `.pak` files
@@ -123,3 +125,25 @@ To run _Dissolution of Eternity_:
 ```sh
 quakespasm -rogue
 ```
+
+# As for _Quake II_...
+At the time of writing, the current GOG installer for the original (not _Enhanced_) version of _Quake II_ plus its mission packs — `setup_quake2_quad_damage_2.0.0.3.exe` — contains music files already in `.ogg` format, so no use of `bchunk` or `oggenc` is needed.
+
+Installing these games with `game-data-packager` as
+```sh
+game-data-packager --install quake2 \
+    --package quake2-full-data --package quake2-music \
+    --package quake2-reckoning-data --package quake2-reckoning-music \
+    --package quake2-groundzero-data --package quake2-groundzero-music \
+    -- ~/Downloads/setup_quake2_quad_damage_2.0.0.3.exe
+```
+will result in 10 music tracks, `02.ogg` through `01.ogg`, in each of `/usr/share/games/quake2/baseq2/music/`, `/usr/share/games/quake2/xatrix/music/`, and `/usr/share/games/quake2/rogue/music/`.
+
+However, the GOG installer contains 20 music tracks, `Track02.ogg` through `Track21.ogg`. Based on file sizes (the laziest way to compare but good enough here), it appears that:
+* `Track02.ogg` through `Track11.ogg` are the ones that `game-data-packager` would install to `/usr/share/games/quake2/baseq2/music/` as `02.ogg` through `11.ogg` for _Quake II_;
+* `Track12.ogg` through `Track21.ogg` are the ones that `game-data-packager` would install to `/usr/share/games/quake2/rogue/music/` as `02.ogg` through `11.ogg` for _Ground Zero_; and
+* a mix of these two sets, i.e. 10 tracks selected from `Track02.ogg` through `Track21.ogg`, are the ones that `game-data-packager` would install to `/usr/share/games/quake2/xatrix/music/` as `02.ogg` through `11.ogg` for _The Reckoning_.
+
+So I assume that `game-data-packager` is correct about which game gets each music track, and I wouldn't want to figure it out manually for _The Reckoning_.
+
+However, what `game-data-packager` does _might_ be unnecessary. The install guide for Yamagi Quake II (the source port that `game-data-packager` installs for _Quake II_) [claims](https://github.com/yquake2/yquake2/blob/QUAKE2_8_30/doc/020_installation.md#the-gogcom-release) that the music files from the GOG release can just be placed into a top-level `music/` folder, relative to the data directory, rather than `baseq2/music/` and so on. This does seem to work (as music is played when I install all tracks to `~/.yq2/music/` alongside whereas `.pak` files etc. are installed to `~/.yq2/baseq2/`, `~/.yq2/xatrix/`, and `~/.yq2/rogue/`), so it's probably safe to assume that Yamagi Quake II knows which game gets each music track even when all music is in one combined folder. Also as noted in that install guide, the track names (`TrackXX.ogg`) are case sensitive, so if these files are extracted from the GOG installer using `innoextract`, the `-L` option to make all output filenames lowercase should _not_ be used.
